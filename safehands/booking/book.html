@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حجز الرعاية - SafeHands</title>
+    <link href="style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>حجز الرعاية - SafeHands</h1>
+        <div class="form-container">
+            <div class="form-group">
+                <label for="providerSelect">مقدم الرعاية</label>
+                <select id="providerSelect" required>
+                    <option value="" disabled selected>اختر مقدم الرعاية</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="reserveDate">تاريخ الحجز</label>
+                <input type="date" id="reserveDate" required>
+            </div>
+            <button onclick="makeReservation()">حجز</button>
+            <div id="statusMessage" class="status-message"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log("Booking page loaded");
+
+            const supabaseUrl = 'https://ebzhfytrzcxsnepcudyl.supabase.co';
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc';
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const emailFromUrl = urlParams.get('email');
+            let email = emailFromUrl;
+
+            // Check for logged-in user
+            const { data: { user }, error: userError } = await supabase.auth.getUser();
+            if (user) {
+                email = user.email;
+                console.log("Logged in user email from session:", email);
+            } else if (!emailFromUrl) {
+                console.error("No user logged in and no email in URL:", userError);
+                document.getElementById('statusMessage').textContent = "يرجى تسجيل الدخول أولاً.";
+                document.getElementById('statusMessage').classList.add('error');
+                setTimeout(() => window.location.href = 'http://127.0.0.1:5500/log/login.html', 2000);
+                return;
+            } else {
+                console.log("Using email from URL:", email);
+            }
+
+            // Get elder_id for the logged-in user
+            const { data: elderData, error: elderError } = await supabase
+                .from('profiles')
+                .select('profile_id')
+                .eq('contact_info', email)
+                .eq('role', 'elder_person')
+                .single();
+            if (elderError || !elderData) {
+                console.error("Elder not found:", elderError);
+                document.getElementById('statusMessage').textContent = "لم يتم العثور على بياناتك ككبير سن.";
+                document.getElementById('statusMessage').classList.add('error');
+                return;
+            }
+            const elderProfileId = elderData.profile_id;
+            console.log("Elder profile_id:", elderProfileId);
+
+            const { data: elderPersonData, error: elderPersonError } = await supabase
+                .from('elder_person')
+                .select('elder_id')
+                .eq('profile_id', elderProfileId)
+                .single();
+            if (elderPersonError || !elderPersonData) {
+                console.error("Elder person data not found:", elderPersonError);
+                document.getElementById('statusMessage').textContent = "لم يتم العثور على معرفك ككبير سن.";
+                document.getElementById('statusMessage').classList.add('error');
+                return;
+            }
+            const elderId = elderPersonData.elder_id;
+            console.log("Elder ID:", elderId);
+
+            // Populate provider dropdown
+            const { data: providers, error: providersError } = await supabase
+                .from('care_provider')
+                .select('provider_id, profiles!inner(name, role), speciality')
+                .eq('profiles.role', 'care_provider');
+            if (providersError || !providers) {
+                console.error("Error fetching providers:", providersError);
+                document.getElementById('statusMessage').textContent = "خطأ في جلب مقدمي الرعاية: " + (providersError ? providersError.message : "بيانات غير متوفرة");
+                document.getElementById('statusMessage').classList.add('error');
+                return;
+            }
+            console.log("Providers fetched:", providers);
+
+            const providerSelect = document.getElementById('providerSelect');
+            providers.forEach(provider => {
+                const option = document.createElement('option');
+                option.value = provider.provider_id;
+                option.textContent = `${provider.profiles.name} - ${provider.speciality}`;
+                providerSelect.appendChild(option);
+            });
+
+            // Handle reservation
+            window.makeReservation = async () => {
+                const providerId = providerSelect.value;
+                const reserveDate = document.getElementById('reserveDate').value;
+                const statusMessage = document.getElementById('statusMessage');
+
+                if (!providerId || !reserveDate) {
+                    statusMessage.textContent = "يرجى اختيار مقدم رعاية وتاريخ.";
+                    statusMessage.classList.add('error');
+                    return;
+                }
+
+                const { error } = await supabase
+                    .from('reserve')
+                    .insert({
+                        elder_id: elderId,
+                        provider_id: providerId,
+                        reserve_date: reserveDate
+                    });
+                if (error) {
+                    console.error("Reservation error:", error);
+                    statusMessage.textContent = "خطأ في الحجز: " + error.message;
+                    statusMessage.classList.add('error');
+                } else {
+                    console.log("Reservation successful");
+                    statusMessage.textContent = "تم الحجز بنجاح!";
+                    statusMessage.classList.remove('error');
+                    statusMessage.classList.add('success');
+                    document.getElementById('reserveDate').value = '';
+                    providerSelect.value = '';
+                }
+            };
+        });
+    </script>
+</body>
+</html>

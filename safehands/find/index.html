@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlLang">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="site_title">Safe Hands - Find Babysitters</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex flex-col">
+  <!-- Navbar -->
+  <header>
+    <nav>
+      <div id="logo" class="logo">
+        <img src="../images-1-removebg-preview.png" alt="Safe Hands Icon">
+        <span data-i18n="site_title">Safe Hands</span>
+      </div>
+      <div class="language-selector">
+        <select id="languageSelect" onchange="changeLanguage()">
+          <option value="ar">🇪🇬 عربي</option>
+          <option value="en">🇺🇸 English</option>
+        </select>
+      </div>
+      <div class="menu-toggle">
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle">☰</label>
+        <ul>
+          <li><a href="../index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
+          <li><a href="../Services/index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
+          <li><a href="../about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
+          <li><a href="../con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
+          <li><a href="index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
+          <li><a href="../booking/index.html" class="nav-link" data-i18n="nav_book_now">احجز الآن</a></li>
+          <li><a href="#" class="nav-link" data-i18n="nav_dashboard">لوحة التحكم</a></li>
+          <li><a href="../log/login.html" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 py-8">
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="mb-8">
+        <br><br><br>
+        <h1 class="text-3xl font-bold mb-2" data-i18n="babysitters_title">ابحث عن جليسة الأطفال المثالية</h1>
+        <p class="text-gray-600" data-i18n="babysitters_description">تصفح مجموعتنا من جليسات الأطفال المؤهلات والموثوقات</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Filter Sidebar -->
+        <div class="lg:col-span-1 space-y-6">
+          <div class="bg-white p-4 rounded-lg shadow-sm border">
+            <h2 class="font-bold text-lg mb-4" data-i18n="filter_title">فلترة جليسات الأطفال</h2>
+            <div class="space-y-4">
+              <div>
+                <label for="location" class="block text-sm font-medium" data-i18n="filter_location">الموقع</label>
+                <input type="text" id="location" class="mt-1 w-full border border-gray-300 rounded-md p-2" data-i18n-placeholder="filter_location_placeholder">
+              </div>
+              <div>
+                <label for="date" class="block text-sm font-medium" data-i18n="filter_date">التاريخ المطلوب</label>
+                <input type="date" id="date" class="mt-1 w-full border border-gray-300 rounded-md p-2">
+              </div>
+              <div>
+                <label class="block text-sm font-medium" data-i18n="filter_price_range">نطاق السعر ($/ساعة): <span id="price-range">15 - 30</span></label>
+                <div class="mt-2 flex space-x-4">
+                  <input type="range" id="price-min" min="10" max="50" value="15" class="w-full">
+                  <input type="range" id="price-max" min="10" max="50" value="30" class="w-full">
+                </div>
+              </div>
+              <div>
+                <label for="age-group" class="block text-sm font-medium" data-i18n="filter_age_group">الفئة العمرية</label>
+                <select id="age-group" class="mt-1 w-full border border-gray-300 rounded-md p-2">
+                  <option value="" data-i18n="filter_age_group_select">اختر الفئة العمرية</option>
+                  <option value="infant" data-i18n="filter_age_infant">الرضع (0-1 سنة)</option>
+                  <option value="toddler" data-i18n="filter_age_toddler">الأطفال الصغار (1-3 سنوات)</option>
+                  <option value="preschool" data-i18n="filter_age_preschool">مرحلة ما قبل المدرسة (3-5 سنوات)</option>
+                  <option value="school-age" data-i18n="filter_age_school">سن المدرسة (5+ سنوات)</option>
+                  <option value="all" data-i18n="filter_age_all">جميع الأعمار</option>
+                </select>
+              </div>
+              <div>
+                <label for="experience" class="block text-sm font-medium" data-i18n="filter_experience">مستوى الخبرة</label>
+                <select id="experience" class="mt-1 w-full border border-gray-300 rounded-md p-2">
+                  <option value="" data-i18n="filter_experience_any">أي خبرة</option>
+                  <option value="beginner" data-i18n="filter_experience_beginner">مبتدئ (0-1 سنة)</option>
+                  <option value="intermediate" data-i18n="filter_experience_intermediate">متوسط (1-3 سنوات)</option>
+                  <option value="expert" data-i18n="filter_experience_expert">خبير (3+ سنوات)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-2" data-i18n="filter_specialties">التخصصات</label>
+                <div class="space-y-2">
+                  <div class="flex items-center space-x-2">
+                    <input type="checkbox" id="infant-care" value="Infant Care" class="specialty-checkbox">
+                    <label for="infant-care" class="text-sm" data-i18n="specialty_infant_care">رعاية الرضع</label>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <input type="checkbox" id="special-needs" value="Special Needs" class="specialty-checkbox">
+                    <label for="special-needs" class="text-sm" data-i18n="specialty_special_needs">الاحتياجات الخاصة</label>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <input type="checkbox" id="first-aid" value="First Aid Certified" class="specialty-checkbox">
+                    <label for="first-aid" class="text-sm" data-i18n="specialty_first_aid">معتمد في الإسعافات الأولية</label>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <input type="checkbox" id="multilingual" value="Multilingual" class="specialty-checkbox">
+                    <label for="multilingual" class="text-sm" data-i18n="specialty_multilingual">متعدد اللغات</label>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <input type="checkbox" id="homework" value="Homework Help" class="specialty-checkbox">
+                    <label for="homework" class="text-sm" data-i18n="specialty_homework">مساعدة في الواجبات</label>
+                  </div>
+                </div>
+              </div>
+              <button id="apply-filters" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" data-i18n="apply_filters">تطبيق الفلاتر</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Babysitter Listings -->
+        <div class="lg:col-span-3">
+          <div id="babysitter-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Babysitter Cards -->
+            <div class="babysitter-card bg-white p-4 rounded-lg shadow-sm border" data-id="1" data-hourly-rate="22" data-specialties="Infant Care,First Aid Certified">
+              <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?q=80&w=774&auto=format&fit=crop" alt="Sarah Johnson" class="w-full h-48 object-cover rounded-md">
+              <h3 class="text-lg font-bold mt-2" data-i18n="babysitter_sarah_name">سارة جونسون</h3>
+              <div class="flex items-center mt-1">
+                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                </svg>
+                <span class="ml-1" data-i18n="babysitter_sarah_rating">4.8 (32 تقييمًا)</span>
+              </div>
+              <p class="text-gray-600 mt-2" data-i18n="babysitter_sarah_description">جليسة أطفال ذات خبرة وحاصلة على شهادة في تعليم الطفولة المبكرة. أحب خلق أنشطة تعليمية ممتعة للأطفال من جميع الأعمار.</p>
+              <div class="flex flex-wrap gap-1 mt-2">
+                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-0.5 rounded" data-i18n="specialty_infant_care">رعاية الرضع</span>
+                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-0.5 rounded" data-i18n="specialty_first_aid">معتمد في الإسعافات الأولية</span>
+              </div>
+              <p class="text-gray-800 font-bold mt-2" data-i18n="babysitter_sarah_price">$22/ساعة</p>
+              <a href="/profiles/index1.html"><button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" data-i18n="book_now">احجز الآن</button></a>
+            </div>
+            <!--  -->
+            <div class="babysitter-card bg-white p-4 rounded-lg shadow-sm border" data-id="2" data-hourly-rate="18" data-specialties="Arts & Crafts,Educational Activities">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=774&auto=format&fit=crop" alt="Michael Chen" class="w-full h-48 object-cover rounded-md">
+              <h3 class="text-lg font-bold mt-2" data-i18n="babysitter_michael_name">مايكل تشين</h3>
+              <div class="flex items-center mt-1">
+                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                </svg>
+                <span class="ml-1" data-i18n="babysitter_michael_rating">4.7 (28 تقييمًا)</span>
+              </div>
+              <p class="text-gray-600 mt-2" data-i18n="babysitter_michael_description">طالب جامعي يدرس تعليم الابتدائي. أتخصص في الأنشطة الإبداعية ومساعدة الأطفال في الواجبات المدرسية.</p>
+              <div class="flex flex-wrap gap-1 mt-2">
+                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-0.5 rounded" data-i18n="specialty_arts_crafts">الفنون والحرف</span>
+                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-0.5 rounded" data-i18n="specialty_educational">أنشطة تعليمية</span>
+              </div>
+              <p class="text-gray-800 font-bold mt-2" data-i18n="babysitter_michael_price">$18/ساعة</p>
+              <a href="/profiles/index2.html"><button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" data-i18n="book_now">احجز الآن</button></a>
+            </div>
+            <!--  -->
+            
+            <div class="babysitter-card bg-white p-4 rounded-lg shadow-sm border border-blue-500 relative" data-id="3" data-hourly-rate="25" data-specialties="Special Needs,Early Development">
+              <span class="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded" data-i18n="featured">مميز</span>
+              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=761&auto=format&fit=crop" alt="Emma Rodriguez" class="w-full h-48 object-cover rounded-md">
+              <h3 class="text-lg font-bold mt-2" data-i18n="babysitter_emma_name">إيما رودريغيز</h3>
+              <div class="flex items-center mt-1">
+                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                </svg>
+                <span class="ml-1" data-i18n="babysitter_emma_rating">4.9 (45 تقييمًا)</span>
+              </div>
+              <p class="text-gray-600 mt-2" data-i18n="babysitter_emma_description">معلمة تعليم خاص معتمدة ولديها خبرة في العمل مع الأطفال ذوي الاحتياجات الخاصة مثل التوحد، اضطراب نقص الانتباه، واضطرابات المعالجة الحسية.</p>
+              <div class="flex flex-wrap gap-1 mt-2">
+                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-0.5 rounded" data-i18n="specialty_special_needs">الاحتياجات الخاصة</span>
+                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-0.5 rounded" data-i18n="specialty_early_development">التطور المبكر</span>
+              </div>
+              <p class="text-gray-800 font-bold mt-2" data-i18n="babysitter_emma_price">$25/ساعة</p>
+              <a href="/profiles/index.html"><button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" data-i18n="book_now">احجز الآن</button></a>
+            </div>
+            <!--  -->
+            <div class="babysitter-card bg-white p-4 rounded-lg shadow-sm border" data-id="4" data-hourly-rate="20" data-specialties="Music Lessons,Sports Activities">
+              <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=774&auto=format&fit=crop" alt="James Wilson" class="w-full h-48 object-cover rounded-md">
+              <h3 class="text-lg font-bold mt-2" data-i18n="babysitter_james_name">جيمس ويلسون</h3>
+              <div class="flex items-center mt-1">
+                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                </svg>
+                <span class="ml-1" data-i18n="babysitter_james_rating">4.6 (19 تقييمًا)</span>
+              </div>
+              <p class="text-gray-600 mt-2" data-i18n="babysitter_james_description">معلم موسيقى يحب دمج الموسيقى، الحركة، والأنشطة الخارجية في جليسة الأطفال. يمكنني أيضًا تقديم دروس بسيطة في البيانو أو الجيتار.</p>
+              <div class="flex flex-wrap gap-1 mt-2">
+                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-0.5 rounded" data-i18n="specialty_music_lessons">دروس الموسيقى</span>
+                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-0.5 rounded" data-i18n="specialty_sports">أنشطة رياضية</span>
+              </div>
+              <p class="text-gray-800 font-bold mt-2" data-i18n="babysitter_james_price">$20/ساعة</p>
+              <a href="../booking/index.html"><button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" data-i18n="book_now">احجز الآن</button></a>
+            </div>
+            <!--  -->
+            <div class="babysitter-card bg-white p-4 rounded-lg shadow-sm border" data-id="5" data-hourly-rate="23" data-specialties="Multilingual,Cooking">
+              <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=774&auto=format&fit=crop" alt="Olivia Patel" class="w-full h-48 object-cover rounded-md">
+              <h3 class="text-lg font-bold mt-2" data-i18n="babysitter_olivia_name">أوليفيا باتيل</h3>
+              <div class="flex items-center mt-1">
+                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                </svg>
+                <span class="ml-1" data-i18n="babysitter_olivia_rating">4.8 (23 تقييمًا)</span>
+              </div>
+              <p class="text-gray-600 mt-2" data-i18n="babysitter_olivia_description">جليسة متعددة اللغات تتحدث الإنجليزية، الإسبانية، والهندية بطلاقة. أحب طهي وجبات صحية مع الأطفال وتعليمهم عن الثقافات المختلفة.</p>
+              <div class="flex flex-wrap gap-1 mt-2">
+                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-0.5 rounded" data-i18n="specialty_multilingual">متعدد اللغات</span>
+                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-0.5 rounded" data-i18n="specialty_cooking">الطبخ</span>
+              </div>
+              <p class="text-gray-800 font-bold mt-2" data-i18n="babysitter_olivia_price">$23/ساعة</p>
+              <a href="../booking/index.html"><button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" data-i18n="book_now">احجز الآن</button></a>
+            </div>
+            <!--  -->
+            <div class="babysitter-card bg-white p-4 rounded-lg shadow-sm border" data-id="6" data-hourly-rate="19" data-specialties="Homework Help,Sports">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=774&auto=format&fit=crop" alt="Noah Thompson" class="w-full h-48 object-cover rounded-md">
+              <h3 class="text-lg font-bold mt-2" data-i18n="babysitter_noah_name">نواه تومسون</h3>
+              <div class="flex items-center mt-1">
+                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                </svg>
+                <span class="ml-1" data-i18n="babysitter_noah_rating">4.5 (15 تقييمًا)</span>
+              </div>
+              <p class="text-gray-600 mt-2" data-i18n="babysitter_noah_description">طالب في تخصص التعليم يتخصص في مساعدة الواجبات والتدريس. أحب أيضًا ممارسة الرياضة والأنشطة الخارجية مع الأطفال.</p>
+              <div class="flex flex-wrap gap-1 mt-2">
+                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-0.5 rounded" data-i18n="specialty_homework">مساعدة في الواجبات</span>
+                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-0.5 rounded" data-i18n="specialty_sports">رياضة</span>
+              </div>
+              <p class="text-gray-800 font-bold mt-2" data-i18n="babysitter_noah_price">$19/ساعة</p>
+              <a href="../booking/index.html"><button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" data-i18n="book_now">احجز الآن</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="grid">
+        <div>
+          <h3 data-i18n="footer_company_title">Safe Hands</h3>
+          <p data-i18n="footer_company_description">احجز جليسات أطفال موثوقة ومُتحقق منها بسهولة وثقة.</p>
+        </div>
+        <div>
+          <h3 data-i18n="footer_links_title">الروابط</h3>
+          <ul>
+            <li><a href="../index.html" data-i18n="nav_home">الرئيسية</a></li>
+            <li><a href="../no/index.html" data-i18n="nav_about">من نحن</a></li>
+            <li><a href="../Services/index.html" data-i18n="nav_services">الخدمات</a></li>
+            <li><a href="../con/index.html" data-i18n="nav_contact">تواصل معنا</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="footer_contact_title">تواصل معنا</h3>
+          <ul>
+            <li data-i18n="footer_contact_email">البريد الإلكتروني: Safehands.com</li>
+            <li data-i18n="footer_contact_phone">رقم الهاتف: 01279581077</li>
+            <li data-i18n="footer_contact_address">العنوان: 202 شارع باكوس، الإسكندرية، مصر</li>
+          </ul>
+        </div>
+        <div class="Social-Media">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="copyright">
+        <span data-i18n="footer_copyright">جميع الحقوق محفوظة. 2025 Safe Hands.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

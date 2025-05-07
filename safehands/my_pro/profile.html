@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البروفايل - SafeHands</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f2f5; color: #333; }
+        .container { max-width: 600px; margin: 50px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; }
+        .form-group p { margin: 5px 0; }
+        .status-message { margin-top: 10px; padding: 10px; border-radius: 4px; }
+        .status-message.error { color: red; }
+        .status-message.success { color: green; }
+        .booking-item { padding: 10px; border-bottom: 1px solid #ddd; }
+        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        .hidden { display: none; }
+        a { color: #007bff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>البروفايل</h1>
+        <div class="profile-container">
+            <div class="form-group">
+                <label>الاسم</label>
+                <p id="user-name">جارٍ التحميل...</p>
+            </div>
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <p id="user-email">جارٍ التحميل...</p>
+            </div>
+            <h2>الحجوزات</h2>
+            <div id="booking-list" class="list-container">جارٍ تحميل الحجوزات...</div>
+            <h2>تغيير كلمة المرور</h2>
+            <div class="form-group">
+                <label for="new-password">كلمة المرور الجديدة</label>
+                <input type="password" id="new-password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">تأكيد كلمة المرور</label>
+                <input type="password" id="confirm-password" required>
+            </div>
+            <button onclick="changePassword()">تغيير كلمة المرور</button>
+            <div id="status-message" class="status-message"></div>
+            <button onclick="logout()">تسجيل الخروج</button>
+            <p id="login-prompt" style="display: none;">يرجى <a href="/my_pro/login.html">تسجيل الدخول</a> أولاً.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('user_id') || 'Not provided';
+            const email = urlParams.get('email') || 'Not provided';
+            let userName = 'Not provided';
+            let userEmail = 'Not provided';
+
+            const loginPrompt = document.getElementById('login-prompt');
+            console.log("Full URL:", window.location.href);
+            console.log("User ID from URL:", userId);
+            console.log("Email from URL:", email);
+
+            // Fetch user data from Supabase using user_id or email
+            if (userId !== 'Not provided') {
+                try {
+                    console.log("Fetching user data for user_id:", userId);
+                    const response = await fetch(`https://ebzhfytrzcxsnepcudyl.supabase.co/rest/v1/users?user_id=eq.${encodeURIComponent(userId)}&select=name,contact_info`, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc",
+                            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc"
+                        }
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! Status: ${response.status}, Response: ${errorText}`);
+                    }
+
+                    const users = await response.json();
+                    console.log("User data fetched from Supabase:", users);
+
+                    if (users.length > 0) {
+                        userName = users[0].name || 'غير متاح';
+                        userEmail = users[0].contact_info || 'غير متاح';
+                    } else {
+                        throw new Error("No user found for user_id: " + userId);
+                    }
+                } catch (error) {
+                    console.error("Error fetching user data with user_id:", error.message, error.stack);
+                }
+            } else if (email !== 'Not provided') {
+                try {
+                    console.log("Fetching user data for email:", email);
+                    const response = await fetch(`https://ebzhfytrzcxsnepcudyl.supabase.co/rest/v1/users?contact_info=eq.${encodeURIComponent(email)}&select=name,contact_info`, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE7NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc",
+                            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc"
+                        }
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! Status: ${response.status}, Response: ${errorText}`);
+                    }
+
+                    const users = await response.json();
+                    console.log("User data fetched from Supabase using email:", users);
+
+                    if (users.length > 0) {
+                        userName = users[0].name || 'غير متاح';
+                        userEmail = users[0].contact_info || 'غير متاح';
+                    } else {
+                        throw new Error("No user found for email: " + email);
+                    }
+                } catch (error) {
+                    console.error("Error fetching user data with email:", error.message, error.stack);
+                }
+            }
+
+            // Display user data
+            document.getElementById('user-name').textContent = userName;
+            document.getElementById('user-email').textContent = userEmail;
+            if (userEmail === 'Not provided' && userName === 'Not provided') {
+                if (loginPrompt) loginPrompt.style.display = 'block';
+            } else {
+                if (loginPrompt) loginPrompt.style.display = 'none';
+            }
+
+            // Update Navbar based on login status
+            const loginLink = document.getElementById('login-link');
+            const profileLink = document.getElementById('profile-link');
+            if (userEmail !== 'Not provided') {
+                if (loginLink) loginLink.style.display = 'none';
+                if (profileLink) profileLink.style.display = 'block';
+            } else {
+                if (loginLink) loginLink.style.display = 'block';
+                if (profileLink) profileLink.style.display = 'none';
+            }
+
+            // Load bookings from Supabase
+            async function loadBookings() {
+                const bookingList = document.getElementById('booking-list');
+                bookingList.innerHTML = '';
+
+                if (userEmail === 'Not provided') {
+                    bookingList.innerHTML = '<p>يرجى تسجيل الدخول لعرض الحجوزات.</p>';
+                    return;
+                }
+
+                try {
+                    console.log("Fetching bookings for email:", userEmail);
+                    const response = await fetch(`https://ebzhfytrzcxsnepcudyl.supabase.co/rest/v1/bookings?email=eq.${encodeURIComponent(userEmail)}&select=*`, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc",
+                            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc"
+                        }
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! Status: ${response.status}, Response: ${errorText}`);
+                    }
+
+                    const bookings = await response.json();
+                    console.log("Bookings fetched from Supabase:", bookings);
+
+                    if (bookings.length === 0) {
+                        bookingList.innerHTML = '<p>لا توجد حجوزات بعد.</p>';
+                    } else {
+                        bookings.forEach(booking => {
+                            const bookingItem = document.createElement('div');
+                            bookingItem.className = 'booking-item';
+                            bookingItem.textContent = `حجز: ${booking.service} - التاريخ: ${booking.date}`;
+                            bookingList.appendChild(bookingItem);
+                        });
+                    }
+                } catch (error) {
+                    console.error("Error fetching bookings from Supabase:", error.message, error.stack);
+                    bookingList.innerHTML = '<p>خطأ في تحميل الحجوزات: ' + error.message + '</p>';
+                }
+            }
+
+            // Initial load of bookings
+            await loadBookings();
+
+            // Change Password logic
+            window.changePassword = async function() {
+                const newPassword = document.getElementById('new-password').value.trim();
+                const confirmPassword = document.getElementById('confirm-password').value.trim();
+                const statusMessage = document.getElementById('status-message');
+
+                if (!newPassword || !confirmPassword) {
+                    statusMessage.textContent = "يرجى ملء جميع الحقول.";
+                    statusMessage.classList.add('error');
+                    return;
+                }
+
+                if (newPassword !== confirmPassword) {
+                    statusMessage.textContent = "كلمتا المرور غير متطابقتين.";
+                    statusMessage.classList.add('error');
+                    return;
+                }
+
+                if (newPassword.length < 6) {
+                    statusMessage.textContent = "يجب أن تكون كلمة المرور 6 أحرف على الأقل.";
+                    statusMessage.classList.add('error');
+                    return;
+                }
+
+                if (userEmail === 'Not provided') {
+                    statusMessage.textContent = "يرجى تسجيل الدخول أولاً لتغيير كلمة المرور.";
+                    statusMessage.classList.add('error');
+                    console.log("Change Password failed: Invalid user email.");
+                    return;
+                }
+
+                try {
+                    console.log("Sending PATCH request to update password for email:", userEmail);
+                    const response = await fetch(`https://ebzhfytrzcxsnepcudyl.supabase.co/rest/v1/users?contact_info=eq.${encodeURIComponent(userEmail)}`, {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc",
+                            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc",
+                            "Prefer": "return=minimal"
+                        },
+                        body: JSON.stringify({
+                            pass: newPassword
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorData.message || 'Unknown'}`);
+                    }
+
+                    statusMessage.textContent = "تم تحديث كلمة المرور بنجاح!";
+                    statusMessage.classList.remove('error');
+                    statusMessage.classList.add('success');
+                    document.getElementById('new-password').value = '';
+                    document.getElementById('confirm-password').value = '';
+                    console.log("Password updated successfully for email:", userEmail);
+                } catch (error) {
+                    console.error("Fetch error in Change Password:", error.message, error.stack);
+                    statusMessage.textContent = `خطأ في تحديث كلمة المرور: ${error.message}. تحقق من الأذونات أو مفتاح الـ API.`;
+                    statusMessage.classList.add('error');
+                }
+            }
+
+            // Logout function
+            window.logout = function() {
+                console.log("Logging out...");
+                console.log("Redirecting to index.html...");
+                window.location.href = '/my_pro/index.html';
+            }
+        });
+    </script>
+</body>
+</html>
