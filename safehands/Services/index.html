@@ -1,139 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl" id="htmlLang">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="site_title">Safe Hands - Services</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <div id="logo" class="logo">
-                <img src="../images-1-removebg-preview.png" alt="Safe Hands Icon">
-                <span data-i18n="site_title">Safe Hands</span>
-            </div>
-            <div class="language-selector">
-                <select id="languageSelect" onchange="changeLanguage()">
-                    <option value="ar">🇪🇬 عربي</option>
-                    <option value="en">🇺🇸 English</option>
-                </select>
-            </div>
-            <div class="menu-toggle">
-                <input type="checkbox" id="menu-toggle">
-                <label for="menu-toggle">☰</label>
-                <ul>
-                    <li><a href="../index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
-                    <li><a href="index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
-                    <li><a href="../about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
-                    <li><a href="../con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
-                    <li><a href="../find/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
-                    <li><a href="../booking/index.html" class="nav-link" data-i18n="nav_book_now">احجز الآن</a></li>
-                    <li><a href="#" class="nav-link" data-i18n="nav_dashboard"> الصفحة الشخصيه</a></li>
-                    <li><a href="../log/login.html" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <br><br><br><br>
-        <section class="services-section">
-            <h1 data-i18n="services_title">خدماتنا</h1>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h2 data-i18n="service_daily_care_title">الرعاية اليومية في المنزل</h2>
-                    <p data-i18n="service_daily_care_description">يقوم مقدم الرعاية بزيارة المسن في المنزل لتقديم المساعدة طوال اليوم.</p>
-                    <img src="photos/different-care-image-1-1019x675.jpg" alt="Daily Care" class="service-image">
-                </div>
-                <div class="service-card">
-                    <h2 data-i18n="service_doctor_visits_title">مرافقة لزيارات الطبيب أو المهمات</h2>
-                    <p data-i18n="service_doctor_visits_description">يرافق شخص ما المسن إلى المواعيد الطبية أو الخروجات المهمة.</p>
-                    <img src="photos/ChatGPT Image Apr 19, 2025, 03_39_26 PM.png" alt="Doctor Visits" class="service-image">
-                </div>
-                <div class="service-card">
-                    <h2 data-i18n="service_medication_title">مساعدة الأدوية</h2>
-                    <p data-i18n="service_medication_description">تنظيم وتتبع جداول الأدوية.</p>
-                    <img src="photos/10-different-ways-to-take-care-of-elders.webp" alt="Medication Assistance" class="service-image">
-                </div>
-                <div class="service-card">
-                    <h2 data-i18n="service_hygiene_title">دعم النظافة الشخصية</h2>
-                    <p data-i18n="service_hygiene_description">مساعدة آمنة ومحترمة في الأنشطة اليومية مثل الاستحمام أو ارتداء الملابس.</p>
-                    <img src="photos/Elder-Care-Arlington-Heights-Illinois.webp" alt="Hygiene Support" class="service-image">
-                </div>
-                <div class="service-card">
-                    <h2 data-i18n="service_overnight_title">الرعاية الليلية أو الإقامة المؤقتة</h2>
-                    <p data-i18n="service_overnight_description">للحالات التي تتطلب وجودًا ليليًا أو رعاية قصيرة الأمد.</p>
-                    <img src="photos/bigstock-elderly-and-nurse-or-carer-25600913.jpg" alt="Overnight Care" class="service-image">
-                </div>
-                <div class="service-card">
-                    <h2 data-i18n="service_companion_title">مرافق للمسنين في المناسبات</h2>
-                    <p data-i18n="service_companion_description">نقدم مرافقًا متعاونًا ليبقى مع المسنين خلال المناسبات العائلية، الأفراح، أو أي مناسبة خاصة.</p>
-                    <img src="photos/450ea778-en.jpg" alt="Companion for Events" class="service-image">
-                </div>
-            </div>
-        </section>
-
-        <hr>
-
-        <section class="why-us">
-            <h2 data-i18n="why_us_title">لماذا تختارنا؟</h2>
-            <ul>
-                <li data-i18n="why_us_background_check">فحص خلفية كامل لكل مقدم رعاية</li>
-                <li data-i18n="why_us_scheduling">جدولة مرنة بناءً على احتياجاتك</li>
-                <li data-i18n="why_us_reviews">تقييمات حقيقية من العائلات</li>
-                <li data-i18n="why_us_support">دعم على مدار الساعة</li>
-                <li data-i18n="why_us_care_plans">خطط رعاية مخصصة لكل عميل</li>
-                <li data-i18n="why_us_pricing">تسعير ميسور وشفاف</li>
-                <li data-i18n="why_us_multilingual">مقدمو رعاية متعددو اللغات متاحون عند الطلب</li>
-            </ul>
-        </section>
-
-        <div class="cta">
-            <a href="../booking/index.html" class="cta-button" data-i18n="book_now">احجز الآن</a>
-        </div>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="grid">
-                <div>
-                    <h3 data-i18n="footer_company_title">Safe Hands</h3>
-                    <p data-i18n="footer_company_description">احجز جليسات أطفال موثوقة ومُتحقق منها بسهولة وثقة.</p>
-                </div>
-                <div>
-                    <h3 data-i18n="footer_links_title">الروابط</h3>
-                    <ul>
-                        <li><a href="../index.html" data-i18n="nav_home">الرئيسية</a></li>
-                        <li><a href="../about/index.html" data-i18n="nav_about">من نحن</a></li>
-                        <li><a href="index.html" data-i18n="nav_services">الخدمات</a></li>
-                        <li><a href="../con/index.html" data-i18n="nav_contact">تواصل معنا</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 data-i18n="footer_contact_title">تواصل معنا</h3>
-                    <ul>
-                        <li data-i18n="footer_contact_email">البريد الإلكتروني: Safehands.com</li>
-                        <li data-i18n="footer_contact_phone">رقم الهاتف: 01279581077</li>
-                        <li data-i18n="footer_contact_address">العنوان: 202 شارع باكوس، الإسكندرية، مصر</li>
-                    </ul>
-                </div>
-                <div class="Social-Media">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-            <div class="copyright">
-                <span data-i18n="footer_copyright">جميع الحقوق محفوظة. 2025 Safe Hands.</span>
-            </div>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-</body>
-</html>

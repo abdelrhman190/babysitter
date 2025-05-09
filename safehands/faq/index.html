@@ -1,123 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl" id="htmlLang">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title data-i18n="site_title">Safe Hands -FAQ</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <header>
-    <nav>
-        <div id="logo" class="logo">
-            <img src="../images-1-removebg-preview.png" alt="Safe Hands Icon">
-            <span data-i18n="site_title">Safe Hands</span>
-        </div>
-        <div class="language-selector">
-            <select id="languageSelect" onchange="changeLanguage()">
-                <option value="ar">🇪🇬 عربي</option>
-                <option value="en">🇺🇸 English</option>
-            </select>
-        </div>
-        <div class="menu-toggle">
-            <input type="checkbox" id="menu-toggle">
-            <label for="menu-toggle">☰</label>
-            <ul>
-                <li><a href="../index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
-                <li><a href="../Services/index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
-                <li><a href="../about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
-                <li><a href="../con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
-                <li><a href="../find/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
-                <li><a href="../booking/index.html" class="nav-link" data-i18n="nav_book_now">احجز الآن</a></li>
-                <li><a href="../index.html#dachborad" class="nav-link" data-i18n="nav_dashboard">لوحة التحكم</a></li>
-                <li><a href="../log/login.html" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a></li>
-            </ul>
-        </div>
-    </nav>
-  </header>
-  <section class="hero">
-    <h1>How Can We Help?</h1>
-    <p>Find advice and answers from our support team fast or get in touch</p>
-    <input type="text" id="search" placeholder="Search for answers..." />
-    <button type="submit">Search</button>
-  </section>
-  
-  <section>
-    <h1>Common Allergy Types</h1>
-    <div class="allergy-grid">
-      <div class="allergy-card">
-        <input type="checkbox" id="milk" class="allergy-checkbox" />
-        <label for="milk">Do you have a milk allergy?</label>
-      </div>
-      <div class="allergy-card">
-        <input type="checkbox" id="egg" class="allergy-checkbox" />
-        <label for="egg">Do you have an egg allergy?</label>
-      </div>
-      <div class="allergy-card">
-        <input type="checkbox" id="peanut" class="allergy-checkbox" />
-        <label for="peanut">Do you have a peanut allergy?</label>
-      </div>
-      <div class="allergy-card">
-        <input type="checkbox" id="seafood" class="allergy-checkbox" />
-        <label for="seafood">Do you have a seafood allergy?</label>
-      </div>
-      <div class="allergy-card">
-        <input type="checkbox" id="meat" class="allergy-checkbox" />
-        <label for="meat">Do you have a meat allergy?</label>
-      </div>
-      <div class="allergy-card">
-        <input type="checkbox" id="pet" class="allergy-checkbox" />
-        <label for="pet">Do you have a pet allergy?</label>
-      </div>
-    </div>
-    <div class="additional-allergy">
-      <label for="additional">If you have any other allergy, please let us know</label>
-      <input type="text" id="additional" placeholder="Enter your allergy here" />
-    </div>
-
-    <!-- Done Button -->
-    <button class="done-btn">Done</button><br><br>
-  </section>
-  <footer class="footer">
-    <div class="container">
-      <div class="grid">
-        <div>
-          <h3 data-i18n="footer_company_title">Safe Hands</h3>
-          <p data-i18n="footer_company_description">احجز جليسات أطفال موثوقة ومُتحقق منها بسهولة وثقة.</p>
-        </div>
-        <div>
-          <h3 data-i18n="footer_links_title">الروابط</h3>
-          <ul>
-            <li><a href="../index.html" data-i18n="nav_home">الرئيسية</a></li>
-            <li><a href="../about/index.html" data-i18n="nav_about">من نحن</a></li>
-            <li><a href="../Services/index.html" data-i18n="nav_services">الخدمات</a></li>
-            <li><a href="../con/index.html" data-i18n="nav_contact">تواصل معنا</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 data-i18n="footer_contact_title">تواصل معنا</h3>
-          <ul>
-            <li data-i18n="footer_contact_email">البريد الإلكتروني: Safehands.com</li>
-            <li data-i18n="footer_contact_phone">رقم الهاتف: 01279581077</li>
-            <li data-i18n="footer_contact_address">العنوان: 202 شارع باكوس، الإسكندرية، مصر</li>
-          </ul>
-        </div>
-        <div class="Social-Media">
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href="#"><i class="fab fa-whatsapp"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-linkedin"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
-        </div>
-      </div>
-      <div class="copyright">
-        <span data-i18n="footer_copyright">جميع الحقوق محفوظة. 2025 Safe Hands.</span>
-      </div>
-    </div>
-  </footer>
-  <script src="script.js"></script>
-</body>
-</html>
