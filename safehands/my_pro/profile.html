@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlLang">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="site_title">الملف الشخصي - SafeHands</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: #333;
+        }
+        .user-name-display {
+            display: none;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #ecf0f1;
+            border-radius: 15px;
+        }
+        .user-name-display i {
+            margin-right: 5px;
+            color: #3498db;
+        }
+        .menu-toggle ul li .user-name-display {
+            display: inline-flex;
+            align-items: center;
+        }
+        header {
+            background-color: #0078D7;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logo img {
+            width: 35px;
+            height: 35px;
+        }
+
+        .language-selector select {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #005BB5;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        .language-selector select:hover {
+            background-color: #004d99;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #005BB5;
+        }
+
+        .menu-toggle label {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .menu-toggle input[type="checkbox"] {
+            display: none;
+        }
+
+        .menu-toggle input[type="checkbox"]:checked ~ ul {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 200px;
+                background-color: #0078D7;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .menu-toggle label {
+                display: block;
+            }
+
+            .menu-toggle input[type="checkbox"]:checked ~ ul {
+                display: block;
+            }
+        }
+
+        .profile-page {
+            padding: 120px 20px 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-page h2 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #0078D7;
+            text-align: center;
+        }
+
+        .form-container {
+            background-color: #fff;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-group input {
+            background-color: #f4f4f9;
+            border: none;
+            margin: 8px 0;
+            padding: 12px 15px;
+            font-size: 14px;
+            border-radius: 8px;
+            width: 100%;
+            outline: none;
+            color: #333;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus {
+            background-color: #e8e8f0;
+            box-shadow: 0 0 5px rgba(0, 120, 215, 0.3);
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .btn {
+            background-color: #0078D7;
+            color: #fff;
+            font-size: 14px;
+            padding: 12px 45px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #005BB5;
+            transform: scale(1.05);
+        }
+
+        .error-message, .success-message {
+            display: none;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .error-message {
+            color: #e74c3c;
+        }
+
+        .success-message {
+            color: #2ecc71;
+        }
+
+        .bookings-list {
+            margin-top: 40px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .bookings-list h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #0078D7;
+        }
+
+        .filter-container {
+            margin-bottom: 20px;
+        }
+
+        .filter-container select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .bookings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .booking-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .booking-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .booking-card p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .action-buttons {
+            display: none;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .booking-card.admin .action-buttons {
+            display: flex;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .accept-btn {
+            background-color: #2ecc71;
+            color: #fff;
+        }
+
+        .accept-btn:hover {
+            background-color: #27ae60;
+            transform: scale(1.05);
+        }
+
+        .reject-btn {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+
+        .reject-btn:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background-color: #0078D7;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            margin-top: auto;
+        }
+
+        footer p {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div id="logo" class="logo">
+                <img src="/images-1-removebg-preview.png" alt="Safe Hands Icon">
+                <span data-i18n="site_title">Safe Hands</span>
+            </div>
+            <div class="language-selector">
+                <select id="languageSelect" onchange="changeLanguage()">
+                    <option value="ar">العربية</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            <div class="menu-toggle">
+                <input type="checkbox" id="menu-toggle">
+                <label for="menu-toggle">☰</label>
+                <ul>
+                    <li><a href="/index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
+                    <li><a href="/Services/index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
+                    <li><a href="/about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
+                    <li><a href="/con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
+                    <li><a href="/baby/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
+                    <li><a href="/booking/book.html" class="nav-link" data-i18n="nav_book_now">احجز الآن</a></li>
+                    <li><a href="/my_pro/profile.html" id="profile-link" class="nav-link" data-i18n="nav_profile" style="display: none;">البروفايل</a></li>
+                    <li><a href="#" id="logout-link" class="nav-link" onclick="logout(); return false;" data-i18n="nav_logout" style="display: none;">تسجيل الخروج</a></li>
+                    <li><a href="/log/login.html" id="login-link" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a></li>
+                    <span id="user-name-display" class="user-name-display">
+                        <i class="fas fa-user"></i>
+                        <span id="user-name-text"></span>
+                    </span>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <section class="profile-page">
+        <h2 id="user-greeting" data-i18n="greeting"></h2>
+        <div class="form-container">
+            <h1 data-i18n="profile_title">الملف الشخصي</h1>
+            <div class="form-group">
+                <label for="user-email" data-i18n="label_email">البريد الإلكتروني</label>
+                <input type="email" id="user-email" readonly>
+            </div>
+            <div class="form-group">
+                <label for="user-name" data-i18n="label_name">الاسم</label>
+                <input type="text" id="user-name" readonly>
+            </div>
+            <div class="form-group">
+                <label for="user-password" data-i18n="label_password">كلمة المرور</label>
+                <input type="password" id="user-password" readonly placeholder="••••••••">
+            </div>
+            <button class="btn" onclick="toggleEditMode()" data-i18n="btn_edit">تعديل</button>
+            <div id="save-section" style="display: none;">
+                <button class="btn" onclick="saveProfile()" data-i18n="btn_save">حفظ</button>
+                <button class="btn" onclick="cancelEdit()" style="background-color: #e74c3c;" data-i18n="btn_cancel">إلغاء</button>
+                <div id="message" class="success-message"></div>
+            </div>
+        </div>
+        <div class="bookings-list" id="bookings-list">
+            <h3 data-i18n="bookings_title">حجوزاتك</h3>
+            <div class="filter-container">
+                <select id="status-filter" onchange="filterBookings()">
+                    <option value="all" data-i18n="filter_all">الكل</option>
+                    <option value="pending" data-i18n="status_pending">معلقة</option>
+                    <option value="accepted" data-i18n="status_accepted">مقبول</option>
+                    <option value="rejected" data-i18n="status_rejected">مرفوض</option>
+                </select>
+            </div>
+            <div id="booking-error" class="error-message"></div>
+            <div id="loading" style="display: none; text-align: center; color: #0078D7;">جارٍ التحميل...</div>
+        </div>
+    </section>
+
+    <footer>
+        <p data-i18n="footer_copyright">© 2025 SafeHands. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script>
+        const translations = {
+            ar: {
+                site_title: "الأيدي الآمنة",
+                nav_home: "الرئيسية",
+                nav_services: "الخدمات",
+                nav_about: "من نحن",
+                nav_contact: "تواصل معنا",
+                nav_find_babysitters: "ابحث عن جليسات أطفال",
+                nav_book_now: "الحجز",
+                nav_profile: "الملف الشخصي",
+                nav_login_signup: "تسجيل الدخول / إنشاء حساب",
+                nav_logout: "تسجيل الخروج",
+                profile_title: "الملف الشخصي",
+                label_email: "البريد الإلكتروني",
+                label_name: "الاسم",
+                label_password: "كلمة المرور",
+                greeting: "مرحبًا ",
+                bookings_title: "حجوزاتك",
+                booking_sitter: "جليس:",
+                booking_date: "تاريخ:",
+                booking_duration: "مدة:",
+                booking_status: "حالة:",
+                status_pending: "معلقة",
+                status_accepted: "مقبول",
+                status_rejected: "مرفوض",
+                action_accept: "قبول",
+                action_reject: "رفض",
+                filter_all: "الكل",
+                error_fetch: "خطأ في جلب الحجوزات: ",
+                no_bookings: "لا توجد حجوزات حاليًا.",
+                error_update: "خطأ في تحديث حالة الحجز: ",
+                loading: "جارٍ التحميل...",
+                btn_edit: "تعديل",
+                btn_save: "حفظ",
+                btn_cancel: "إلغاء",
+                success_save: "تم حفظ التغييرات بنجاح!",
+                error_save: "حدث خطأ أثناء الحفظ: ",
+                footer_copyright: "© 2025 الأيدي الآمنة. جميع الحقوق محفوظة."
+            },
+            en: {
+                site_title: "Safe Hands",
+                nav_home: "Home",
+                nav_services: "Services",
+                nav_about: "About",
+                nav_contact: "Contact",
+                nav_find_babysitters: "Find Babysitters",
+                nav_book_now: "Book Now",
+                nav_profile: "My Profile",
+                nav_login_signup: "Login/Sign Up",
+                nav_logout: "Logout",
+                profile_title: "Profile",
+                label_email: "Email",
+                label_name: "Name",
+                label_password: "Password",
+                greeting: "Hello ",
+                bookings_title: "Your Bookings",
+                booking_sitter: "Babysitter:",
+                booking_date: "Date:",
+                booking_duration: "Duration:",
+                booking_status: "Status:",
+                status_pending: "Pending",
+                status_accepted: "Accepted",
+                status_rejected: "Rejected",
+                action_accept: "Accept",
+                action_reject: "Reject",
+                filter_all: "All",
+                error_fetch: "Error fetching bookings: ",
+                no_bookings: "No bookings available.",
+                error_update: "Error updating booking status: ",
+                loading: "Loading...",
+                btn_edit: "Edit",
+                btn_save: "Save",
+                btn_cancel: "Cancel",
+                success_save: "Changes saved successfully!",
+                error_save: "Error saving changes: ",
+                footer_copyright: "© 2025 SafeHands. All rights reserved."
+            }
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById('languageSelect').value;
+            document.getElementById('htmlLang').setAttribute('lang', lang);
+            document.getElementById('htmlLang').setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                element.textContent = translations[lang][key];
+            });
+
+            updateUserInfo();
+            filterBookings();
+            updateNavbar();
+
+            localStorage.setItem('language', lang);
+        }
+
+        function updateNavbar() {
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            const loginLink = document.getElementById('login-link');
+            const profileLink = document.getElementById('profile-link');
+            const logoutLink = document.getElementById('logout-link');
+            const userNameDisplay = document.getElementById('user-name-display');
+            const userNameText = document.getElementById('user-name-text');
+            const lang = document.getElementById('languageSelect').value;
+
+            if (userData.email) {
+                loginLink.style.display = 'none';
+                profileLink.style.display = 'block';
+                logoutLink.style.display = 'block';
+                userNameDisplay.style.display = 'inline-flex';
+                userNameText.textContent = userData.name || 'User';
+            } else {
+                loginLink.style.display = 'block';
+                profileLink.style.display = 'none';
+                logoutLink.style.display = 'none';
+                userNameDisplay.style.display = 'none';
+                setTimeout(() => window.location.href = '/log/login.html', 100);
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('userData');
+            updateNavbar();
+            window.location.href = '/log/login.html';
+        }
+
+        const supabase = window.supabase.createClient('https://ebzhfytrzcxsnepcudyl.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc');
+
+        function updateUserInfo() {
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            const lang = document.getElementById('languageSelect').value;
+            if (userData.email) {
+                document.getElementById('user-email').value = userData.email;
+                document.getElementById('user-name').value = userData.name || '';
+                document.getElementById('user-password').value = ''; // Password is not stored in localStorage for security
+                document.getElementById('user-greeting').textContent = `${translations[lang].greeting}${userData.name.split(' ')[0] || 'مستخدم'}`;
+            } else {
+                window.location.href = '/log/login.html';
+            }
+        }
+
+        function toggleEditMode() {
+            const editBtn = document.querySelector('button[data-i18n="btn_edit"]');
+            const saveSection = document.getElementById('save-section');
+            const inputs = document.querySelectorAll('#user-name, #user-password');
+
+            if (editBtn.textContent === translations[document.getElementById('languageSelect').value].btn_edit) {
+                inputs.forEach(input => input.removeAttribute('readonly'));
+                editBtn.style.display = 'none';
+                saveSection.style.display = 'block';
+            }
+        }
+
+        async function saveProfile() {
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            const newName = document.getElementById('user-name').value.trim();
+            const newPassword = document.getElementById('user-password').value.trim();
+            const message = document.getElementById('message');
+            const lang = document.getElementById('languageSelect').value;
+
+            if (!newName) {
+                message.textContent = translations[lang].error_save + translations[lang].label_name + ' مطلوب';
+                message.className = 'error-message';
+                message.style.display = 'block';
+                return;
+            }
+
+            try {
+                const { error: updateError } = await supabase
+                    .from('users') // Assuming a 'users' table exists
+                    .update({ name: newName, password: newPassword ? newPassword : undefined })
+                    .eq('email', userData.email);
+
+                if (updateError) throw updateError;
+
+                userData.name = newName;
+                if (newPassword) userData.password = newPassword; // Note: In production, hash the password
+                localStorage.setItem('userData', JSON.stringify(userData));
+
+                message.textContent = translations[lang].success_save;
+                message.className = 'success-message';
+                message.style.display = 'block';
+                toggleEditMode();
+                updateUserInfo();
+                updateNavbar();
+            } catch (error) {
+                message.textContent = `${translations[lang].error_save}${error.message}`;
+                message.className = 'error-message';
+                message.style.display = 'block';
+            }
+        }
+
+        function cancelEdit() {
+            updateUserInfo();
+            document.querySelector('button[data-i18n="btn_edit"]').style.display = 'block';
+            document.getElementById('save-section').style.display = 'none';
+            document.getElementById('message').style.display = 'none';
+        }
+
+        async function fetchBookings(email) {
+            const loading = document.getElementById('loading');
+            const errorDiv = document.getElementById('booking-error');
+            const bookingsList = document.getElementById('bookings-list');
+            const lang = document.getElementById('languageSelect').value;
+
+            loading.style.display = 'block';
+            errorDiv.style.display = 'none';
+            bookingsList.querySelector('.bookings-grid')?.remove();
+
+            try {
+                const { data: bookings, error: bookingsError } = await supabase
+                    .from('bookings')
+                    .select('*')
+                    .eq('user_email', email);
+
+                if (bookingsError) throw bookingsError;
+
+                bookingsList.innerHTML = `<h3 data-i18n="bookings_title">${translations[lang].bookings_title}</h3><div class="filter-container"><select id="status-filter" onchange="filterBookings()"><option value="all" data-i18n="filter_all">${translations[lang].filter_all}</option><option value="pending" data-i18n="status_pending">${translations[lang].status_pending}</option><option value="accepted" data-i18n="status_accepted">${translations[lang].status_accepted}</option><option value="rejected" data-i18n="status_rejected">${translations[lang].status_rejected}</option></select></div><div id="booking-error" class="error-message"></div><div id="loading" style="display: none; text-align: center; color: #0078D7;">${translations[lang].loading}</div>`;
+                filterBookings(bookings);
+            } catch (error) {
+                errorDiv.textContent = `${translations[lang].error_fetch}${error.message}`;
+                errorDiv.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function filterBookings(bookingsData) {
+            const filter = document.getElementById('status-filter').value;
+            const email = JSON.parse(localStorage.getItem('userData') || '{}').email;
+            const bookingsList = document.getElementById('bookings-list');
+            const lang = document.getElementById('languageSelect').value;
+
+            if (!bookingsData) {
+                fetchBookings(email);
+                return;
+            }
+
+            const filteredBookings = filter === 'all' ? bookingsData : bookingsData.filter(b => b.status === filter);
+            bookingsList.querySelector('.bookings-grid')?.remove();
+
+            if (filteredBookings.length > 0) {
+                const grid = document.createElement('div');
+                grid.className = 'bookings-grid';
+                const isAdmin = email === "admin@example.com";
+                filteredBookings.forEach(b => {
+                    const card = document.createElement('div');
+                    card.className = `booking-card ${isAdmin ? 'admin' : ''}`;
+                    card.innerHTML = `
+                        <p><strong data-i18n="booking_sitter">${translations[lang].booking_sitter}</strong> ${b.sitter_email}</p>
+                        <p><strong data-i18n="booking_date">${translations[lang].booking_date}</strong> ${new Date(b.booking_date).toLocaleString()}</p>
+                        <p><strong data-i18n="booking_duration">${translations[lang].booking_duration}</strong> ${b.duration_hours} ${lang === 'ar' ? 'ساعة' : 'hours'}</p>
+                        <p><strong data-i18n="booking_status">${translations[lang].booking_status}</strong> ${b.status === 'pending' ? translations[lang].status_pending : b.status === 'accepted' ? translations[lang].status_accepted : translations[lang].status_rejected}</p>
+                        ${b.status === 'pending' && isAdmin ? `
+                        <div class="action-buttons">
+                            <button class="action-btn accept-btn" onclick="updateBookingStatus('${b.id}', 'accepted', '${email}')">${translations[lang].action_accept}</button>
+                            <button class="action-btn reject-btn" onclick="updateBookingStatus('${b.id}', 'rejected', '${email}')">${translations[lang].action_reject}</button>
+                        </div>` : ''}
+                    `;
+                    grid.appendChild(card);
+                });
+                bookingsList.appendChild(grid);
+            } else {
+                bookingsList.innerHTML += `<p>${translations[lang].no_bookings}</p>`;
+            }
+        }
+
+        window.updateBookingStatus = async (bookingId, newStatus, userEmail) => {
+            const errorDiv = document.getElementById('booking-error');
+            try {
+                const { error } = await supabase
+                    .from('bookings')
+                    .update({ status: newStatus })
+                    .eq('id', bookingId);
+
+                if (error) throw error;
+
+                fetchBookings(userEmail);
+            } catch (error) {
+                errorDiv.textContent = `${translations[document.getElementById('languageSelect').value].error_update}${error.message}`;
+                errorDiv.style.display = 'block';
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('language') || 'ar';
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage();
+            updateNavbar();
+            updateUserInfo();
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            if (userData.email) fetchBookings(userData.email);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlLang">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images-removebg-preview.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title data-i18n="site_title">Safe Hands - Contact Us</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <div id="logo" class="logo">
+                <img src="images-1-removebg-preview.png" alt="Safe Hands Icon">
+                <span data-i18n="site_title">Safe Hands</span>
+            </div>
+            <div class="language-selector">
+                <select id="languageSelect" onchange="changeLanguage()">
+                    <option value="ar">العربية</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            <div class="menu-toggle">
+                <input type="checkbox" id="menu-toggle">
+                <label for="menu-toggle">☰</label>
+                <ul>
+                    <li><a href="/index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
+                    <li><a href="/Services/index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
+                    <li><a href="/about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
+                    <li><a href="/con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
+                    <li><a href="/baby/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
+                    <li><a href="/booking/book.html" class="nav-link" data-i18n="nav_book_now">احجز الآن</a></li>
+                    <li id="dashboard-link" style="display: none;">
+                        
+                        <a href="/my_pro/profile.html" class="nav-link" data-i18n="nav_dashboard">الصفحة الشخصية</a>
+                    </li>
+                    <li id="logout-link" style="display: none;"><a href="#" class="nav-link" onclick="logout(); return false;" data-i18n="nav_logout">تسجيل الخروج</a></li>
+                    <li id="login-signup-link"><a href="/log/login.html" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a></li>
+                    <span id="user-name-display" class="user-name-display">
+                        <i class="fas fa-user"></i>
+                        <span id="user-name-text"></span>
+                    </span>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <section class="contact-section">
+        <div class="contact-container">
+            <h1 data-i18n="contact_title">تواصل معنا</h1>
+            <p data-i18n="contact_description">يسعدنا سماع رأيك! املأ النموذج أدناه وسنرد عليك في أقرب وقت.</p>
+            <div class="contact-form">
+                <form id="contactForm" action="contact.php" method="POST">
+                    <input type="hidden" name="language" id="formLanguage" value="ar">
+                    <div class="form-group">
+                        <label for="name" data-i18n="name_label"><i class="fas fa-user"></i> الاسم</label>
+                        <input type="text" id="name" name="name" required placeholder="أدخل اسمك">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" data-i18n="email_label"><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
+                        <input type="email" id="email" name="email" required placeholder="أدخل بريدك الإلكتروني">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" data-i18n="phone_label"><i class="fas fa-phone"></i> رقم الهاتف</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="أدخل رقم هاتفك">
+                    </div>
+                    <div class="form-group">
+                        <label for="message" data-i18n="message_label"><i class="fas fa-comment"></i> رسالتك</label>
+                        <textarea id="message" name="message" required placeholder="اكتب رسالتك هنا"></textarea>
+                    </div>
+                    <button type="submit" data-i18n="submit_button">إرسال</button>
+                </form>
+                <div class="success-message" id="successMessage" data-i18n="success_message">تم إرسال رسالتك بنجاح! سنتواصل معك قريبًا.</div>
+                <div class="error-message" id="errorMessage" data-i18n="error_message">حدث خطأ أثناء إرسال الرسالة، حاول مرة أخرى.</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="grid">
+                <div>
+                    <h3 data-i18n="footer_company_title">Safe Hands</h3>
+                    <p data-i18n="footer_company_description">
+                        احجز جليسات أطفال موثوقة ومُتحقق منها بسهولة وثقة.
+                    </p>
+                </div>
+                <div>
+                    <h3 data-i18n="footer_links_title">الروابط</h3>
+                    <ul>
+                        <li><a href="index.html" data-i18n="nav_home">الرئيسية</a></li>
+                        <li><a href="/about/index.html" data-i18n="nav_about">من نحن</a></li>
+                        <li><a href="/Services/index.html" data-i18n="nav_services">الخدمات</a></li>
+                        <li><a href="/con/index.html" data-i18n="nav_contact">تواصل معنا</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 data-i18n="footer_contact_title">تواصل معنا</h3>
+                    <ul>
+                        <li data-i18n="footer_contact_email">البريد الإلكتروني: Safehands.com</li>
+                        <li data-i18n="footer_contact_phone">رقم الهاتف: 01279581077</li>
+                        <li data-i18n="footer_contact_address">العنوان: 202 شارع باكوس، الإسكندرية، مصر</li>
+                    </ul>
+                </div>
+                <div class="Social-Media">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <span data-i18n="footer_copyright">جميع الحقوق محفوظة. 2025 Safe Hands.</span>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const translations = {
+            ar: {
+                site_title: "الأيدي الآمنة",
+                nav_home: "الرئيسية",
+                nav_services: "الخدمات",
+                nav_about: "من نحن",
+                nav_contact: "تواصل معنا",
+                nav_find_babysitters: "ابحث عن جليسات أطفال",
+                nav_book_now: "احجز الآن",
+                nav_dashboard: "الصفحة الشخصية",
+                nav_login_signup: "تسجيل الدخول / إنشاء حساب",
+                nav_logout: "تسجيل الخروج",
+                contact_title: "تواصل معنا",
+                contact_description: "يسعدنا سماع رأيك! املأ النموذج أدناه وسنرد عليك في أقرب وقت.",
+                name_label: "الاسم",
+                email_label: "البريد الإلكتروني",
+                phone_label: "رقم الهاتف",
+                message_label: "رسالتك",
+                submit_button: "إرسال",
+                success_message: "تم إرسال رسالتك بنجاح! سنتواصل معك قريبًا.",
+                error_message: "حدث خطأ أثناء إرسال الرسالة، حاول مرة أخرى.",
+                footer_company_title: "الأيدي الآمنة",
+                footer_company_description: "احجز جليسات أطفال موثوقة ومُتحقق منها بسهولة وثقة.",
+                footer_links_title: "الروابط",
+                footer_contact_title: "تواصل معنا",
+                footer_contact_email: "البريد الإلكتروني: Safehands.com",
+                footer_contact_phone: "رقم الهاتف: 01279581077",
+                footer_contact_address: "العنوان: 202 شارع باكوس، الإسكندرية، مصر",
+                footer_copyright: "جميع الحقوق محفوظة. 2025 الأيدي الآمنة."
+            },
+            en: {
+                site_title: "Safe Hands",
+                nav_home: "Home",
+                nav_services: "Services",
+                nav_about: "About",
+                nav_contact: "Contact",
+                nav_find_babysitters: "Find Babysitters",
+                nav_book_now: "Book Now",
+                nav_dashboard: "My profile",
+                nav_login_signup: "Login/Sign Up",
+                nav_logout: "Logout",
+                contact_title: "Contact Us",
+                contact_description: "We'd love to hear from you! Fill out the form below and we'll get back to you soon.",
+                name_label: "Name",
+                email_label: "Email",
+                phone_label: "Phone Number",
+                message_label: "Your Message",
+                submit_button: "Send",
+                success_message: "Your message has been sent successfully! We'll contact you soon.",
+                error_message: "An error occurred while sending the message. Please try again.",
+                footer_company_title: "Safe Hands",
+                footer_company_description: "Trusted Babysitting, Book reliable, vetted babysitters for your children with ease and confidence.",
+                footer_links_title: "Links",
+                footer_contact_title: "Contact Us",
+                footer_contact_email: "Email: Safehands.com",
+                footer_contact_phone: "Phone: 01279581077",
+                footer_contact_address: "Address: 202 Bakos Street, Alexandria, Egypt",
+                footer_copyright: "All rights reserved. 2025 Safe Hands."
+            }
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById('languageSelect').value;
+            document.getElementById('htmlLang').setAttribute('lang', lang);
+            document.getElementById('htmlLang').setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            document.getElementById('formLanguage').value = lang;
+
+            document.getElementById('name').placeholder = lang === 'ar' ? 'أدخل اسمك' : 'Enter your name';
+            document.getElementById('email').placeholder = lang === 'ar' ? 'أدخل بريدك الإلكتروني' : 'Enter your email';
+            document.getElementById('phone').placeholder = lang === 'ar' ? 'أدخل رقم هاتفك' : 'Enter your phone number';
+            document.getElementById('message').placeholder = lang === 'ar' ? 'اكتب رسالتك هنا' : 'Write your message here';
+
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                element.textContent = translations[lang][key];
+            });
+
+            localStorage.setItem('language', lang);
+            updateNavbar();
+        }
+
+        function updateNavbar() {
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            const loginSignupLink = document.getElementById('login-signup-link');
+            const dashboardLink = document.getElementById('dashboard-link');
+            const logoutLink = document.getElementById('logout-link');
+            const userNameDisplay = document.getElementById('user-name-display');
+            const userNameText = document.getElementById('user-name-text');
+
+            if (userData.email) {
+                loginSignupLink.style.display = 'none';
+                dashboardLink.style.display = 'block';
+                logoutLink.style.display = 'block';
+                userNameDisplay.style.display = 'inline-flex';
+                userNameText.textContent = userData.name || 'User';
+            } else {
+                loginSignupLink.style.display = 'block';
+                dashboardLink.style.display = 'none';
+                logoutLink.style.display = 'none';
+                userNameDisplay.style.display = 'none';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('userData');
+            updateNavbar();
+            window.location.href = '/log/login.html';
+        }
+
+        window.onload = function() {
+            const savedLang = localStorage.getItem('language') || 'ar';
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage();
+            updateNavbar();
+        };
+
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const form = this;
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+
+            fetch('contact.php', {
+                method: 'POST',
+                body: new FormData(form)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    successMessage.style.display = 'block';
+                    errorMessage.style.display = 'none';
+                    form.reset();
+                    setTimeout(() => successMessage.style.display = 'none', 5000);
+                } else {
+                    errorMessage.style.display = 'block';
+                    successMessage.style.display = 'none';
+                    setTimeout(() => errorMessage.style.display = 'none', 5000);
+                }
+            })
+            .catch(() => {
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                setTimeout(() => errorMessage.style.display = 'none', 5000);
+            });
+        });
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: rgba(0, 120, 215, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5px;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logo img {
+            width: 35px;
+            height: 35px;
+        }
+
+        .language-selector select {
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .user-name-display {
+            display: none;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #ecf0f1;
+            border-radius: 15px;
+        }
+        .user-name-display i {
+            margin-right: 5px;
+            color: #3498db;
+        }
+        .menu-toggle ul li .user-name-display {
+            display: inline-flex;
+            align-items: center;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #005BB5;
+}
+
+        nav .menu-toggle label {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        nav .menu-toggle input[type="checkbox"] {
+            display: none;
+        }
+
+        nav .menu-toggle input[type="checkbox"]:checked ~ ul {
+            display: block;
+        }
+
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: rgba(0, 120, 215, 0.95);
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                backdrop-filter: blur(5px);
+            }
+
+            nav .menu-toggle {
+                display: block;
+            }
+
+            nav .menu-toggle label {
+                display: block;
+            }
+
+            nav .menu-toggle input[type="checkbox"]:checked ~ ul {
+                display: block;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 10px;
+                border-radius: 5px;
+            }
+        }
+
+        .contact-section {
+            padding: 100px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-container h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #0078D7;
+            margin-bottom: 20px;
+        }
+
+        .contact-container p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        [dir="ltr"] .form-group {
+            text-align: left;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-group label i {
+            margin-left: 5px;
+            color: #0078D7;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #98ded9;
+            box-shadow: 0 0 5px rgba(152, 222, 217, 0.5);
+            outline: none;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        button {
+            background-color: #98ded9;
+            color: #ffffff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #7cc4bf;
+            transform: translateY(-2px);
+        }
+
+        .success-message,
+        .error-message {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .footer {
+            background-color: #0078D7;
+            color: #fff;
+            padding: 40px 20px;
+        }
+
+        .footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .footer h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .footer p {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .footer ul {
+            list-style: none;
+        }
+
+        .footer ul li {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .footer ul li a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer ul li a:hover {
+            color: #98ded9;
+        }
+
+        .Social-Media {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .Social-Media a {
+            display: flex;
+            background: #e3edf7;
+            height: 40px;
+            width: 40px;
+            border-radius: 8px;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 3px 3px 5px -0.5px rgba(0, 0, 0, 0.15), -3px -3px 5px -0.5px rgba(255, 255, 255, 0.7);
+            transition: transform 0.5s;
+        }
+
+        .Social-Media a i {
+            font-size: 20px;
+            color: #777;
+            transition: transform 0.5s;
+        }
+
+        .Social-Media a:hover {
+            box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, 0.2), inset -4px -4px 6px -1px rgba(255, 255, 255, 0.7), -0.5px -0.5px 0px rgba(255, 255, 255, 1), 0.5px 0.5px 0px rgba(0, 0, 0, 0.15), 0px 12px 10px -10px rgba(0, 0, 0, 0.05);
+            transform: translateY(2px);
+        }
+
+        .Social-Media a:hover i {
+            transform: scale(0.90);
+        }
+
+        .Social-Media a:hover .fa-facebook { color: #3b5998; }
+        .Social-Media a:hover .fa-whatsapp { color: #4fce5d; }
+        .Social-Media a:hover .fa-twitter { color: #00acee; }
+        .Social-Media a:hover .fa-instagram { color: #f14843; }
+        .Social-Media a:hover .fa-linkedin { color: #3b5998; }
+        .Social-Media a:hover .fa-youtube { color: #f00; }
+
+        .footer .copyright {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                padding: 20px;
+            }
+
+            .contact-container h1 {
+                font-size: 28px;
+            }
+
+            .contact-container p {
+                font-size: 16px;
+            }
+
+            .footer .grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .Social-Media {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-container h1 {
+                font-size: 24px;
+            }
+
+            .contact-container p {
+                font-size: 14px;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</body>
+</html>

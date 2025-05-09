@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlLang">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-i18n="site_title">Safe Hands - FAQ</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+        <div id="logo" class="logo">
+            <img src="../images-1-removebg-preview.png" alt="Safe Hands Icon">
+            <span data-i18n="site_title">Safe Hands</span>
+        </div>
+        <div class="language-selector">
+            <select id="languageSelect" onchange="changeLanguage()">
+                <option value="ar">🇪🇬 عربي</option>
+                <option value="en">🇺🇸 English</option>
+            </select>
+        </div>
+        <div class="menu-toggle">
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle">☰</label>
+            <ul>
+                <li><a href="../index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
+                <li><a href="../Services/index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
+                <li><a href="../about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
+                <li><a href="../con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
+                <li><a href="/baby/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
+                <li><a href="/booking/book.html" class="nav-link" data-i18n="nav_book_now">احجز الآن</a></li>
+                <li id="dashboard-link" style="display: none;">
+                    
+                    <a href="/my_pro/profile.html" class="nav-link" data-i18n="nav_dashboard">الصفحة الشخصية</a>
+                </li>
+                <li id="logout-link" style="display: none;"><a href="#" class="nav-link" onclick="logout(); return false;" data-i18n="nav_logout">تسجيل الخروج</a></li>
+                <li id="login-signup-link"><a href="../log/login.html" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a></li>
+                <span id="user-name-display" class="user-name-display">
+                  <i class="fas fa-user"></i>
+                  <span id="user-name-text"></span>
+              </span>
+              </ul>
+        </div>
+    </nav>
+  </header>
+  <section class="hero">
+    <h1 data-i18n="hero_title">كيف يمكننا مساعدتك؟</h1>
+    <p data-i18n="hero_description">ابحث عن نصائح وإجابات من فريق الدعم لدينا بسرعة أو تواصل معنا</p>
+    <input type="text" id="search" data-i18n-placeholder="search_placeholder" placeholder="ابحث عن إجابات..." />
+    <button type="submit" data-i18n="send_button">إرسال</button>
+  </section>
+  
+  <section>
+    <h1 data-i18n="allergy_title">أنواع الحساسية الشائعة</h1>
+    <div class="allergy-grid">
+      <div class="allergy-card">
+        <input type="checkbox" id="milk" class="allergy-checkbox" />
+        <label for="milk" data-i18n="allergy_milk">هل تعاني من حساسية الحليب؟</label>
+      </div>
+      <div class="allergy-card">
+        <input type="checkbox" id="egg" class="allergy-checkbox" />
+        <label for="egg" data-i18n="allergy_egg">هل تعاني من حساسية البيض؟</label>
+      </div>
+      <div class="allergy-card">
+        <input type="checkbox" id="peanut" class="allergy-checkbox" />
+        <label for="peanut" data-i18n="allergy_peanut">هل تعاني من حساسية الفول السوداني؟ (مثل اللوز)</label>
+      </div>
+      <div class="allergy-card">
+        <input type="checkbox" id="seafood" class="allergy-checkbox" />
+        <label for="seafood" data-i18n="allergy_seafood">هل تعاني من حساسية المأكولات البحرية؟ (الأسماك أو الجمبري)</label>
+      </div>
+      <div class="allergy-card">
+        <input type="checkbox" id="meat" class="allergy-checkbox" />
+        <label for="meat" data-i18n="allergy_meat">هل تعاني من حساسية اللحوم؟</label>
+      </div>
+      <div class="allergy-card">
+        <input type="checkbox" id="pet" class="allergy-checkbox" />
+        <label for="pet" data-i18n="allergy_pet">هل تعاني من حساسية الحيوانات الأليفة؟ (القطط أو الكلاب)</label>
+      </div>
+    </div>
+    <div class="additional-allergy">
+      <label for="additional" data-i18n="allergy_other">إذا كنت تعاني من أي حساسيات أخرى، من فضلك أخبرنا</label>
+      <input type="text" id="additional" data-i18n-placeholder="allergy_placeholder" placeholder="اكتب حساسيتك هنا..." />
+    </div>
+    <button class="done-btn" data-i18n="send_button">إرسال</button><br><br>
+  </section>
+  <footer class="footer">
+    <div class="container">
+      <div class="grid">
+        <div>
+          <h3 data-i18n="footer_company_title">Safe Hands</h3>
+          <p data-i18n="footer_company_description">احجز جليسات أطفال موثوقة ومُتحقق منها بسهولة وثقة.</p>
+        </div>
+        <div>
+          <h3 data-i18n="footer_links_title">الروابط</h3>
+          <ul>
+            <li><a href="../index.html" data-i18n="nav_home">الرئيسية</a></li>
+            <li><a href="../about/index.html" data-i18n="nav_about">من نحن</a></li>
+            <li><a href="../Services/index.html" data-i18n="nav_services">الخدمات</a></li>
+            <li><a href="../con/index.html" data-i18n="nav_contact">تواصل معنا</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="footer_contact_title">تواصل معنا</h3>
+          <ul>
+            <li data-i18n="footer_contact_email">البريد الإلكتروني: Safehands.com</li>
+            <li data-i18n="footer_contact_phone">رقم الهاتف: 01279581077</li>
+            <li data-i18n="footer_contact_address">العنوان: 202 شارع باكوس، الإسكندرية، مصر</li>
+          </ul>
+        </div>
+        <div class="Social-Media">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="copyright">
+        <span data-i18n="footer_copyright">جميع الحقوق محفوظة. 2025 Safe Hands.</span>
+      </div>
+    </div>
+  </footer>
+  <script>
+    const translations = {
+      ar: {
+        site_title: "الأيدي الآمنة",
+        nav_home: "الرئيسية",
+        nav_services: "الخدمات",
+        nav_about: "من نحن",
+        nav_contact: "تواصل معنا",
+        nav_find_babysitters: "ابحث عن جليسات أطفال",
+        nav_book_now: "احجز الآن",
+        nav_dashboard: "الصفحة الشخصية",
+        nav_login_signup: "تسجيل الدخول / إنشاء حساب",
+        nav_logout: "تسجيل الخروج",
+        hero_title: "كيف يمكننا مساعدتك؟",
+        hero_description: "ابحث عن نصائح وإجابات من فريق الدعم لدينا بسرعة أو تواصل معنا",
+        search_placeholder: "ابحث عن إجابات...",
+        send_button: "إرسال",
+        allergy_title: "أنواع الحساسية الشائعة",
+        allergy_general: "هل تعاني من أي حساسية؟",
+        allergy_milk: "هل تعاني من حساسية الحليب؟",
+        allergy_egg: "هل تعاني من حساسية البيض؟",
+        allergy_peanut: "هل تعاني من حساسية الفول السوداني؟ (مثل اللوز)",
+        allergy_seafood: "هل تعاني من حساسية المأكولات البحرية؟ (الأسماك أو الجمبري)",
+        allergy_meat: "هل تعاني من حساسية اللحوم؟",
+        allergy_pet: "هل تعاني من حساسية الحيوانات الأليفة؟ (القطط أو الكلاب)",
+        allergy_wheat: "هل تعاني من حساسية القمح؟",
+        allergy_other: "إذا كنت تعاني من أي حساسيات أخرى، من فضلك أخبرنا",
+        allergy_placeholder: "اكتب حساسيتك هنا...",
+        footer_company_title: "الأيدي الآمنة",
+        footer_company_description: "احجز جليسات أطفال موثوقة ومُتحقق منها بسهولة وثقة.",
+        footer_links_title: "الروابط",
+        footer_contact_title: "تواصل معنا",
+        footer_contact_email: "البريد الإلكتروني: Safehands.com",
+        footer_contact_phone: "رقم الهاتف: 01279581077",
+        footer_contact_address: "العنوان: 202 شارع باكوس، الإسكندرية، مصر",
+        footer_copyright: "جميع الحقوق محفوظة. 2025 الأيدي الآمنة."
+      },
+      en: {
+        site_title: "Safe Hands",
+        nav_home: "Home",
+        nav_services: "Services",
+        nav_about: "About",
+        nav_contact: "Contact",
+        nav_find_babysitters: "Find Babysitters",
+        nav_book_now: "Book Now",
+        nav_dashboard: "My profile",
+        nav_login_signup: "Login/Sign Up",
+        nav_logout: "Logout",
+        hero_title: "How Can We Help?",
+        hero_description: "Find advice and answers from our support team fast or get in touch",
+        search_placeholder: "Search for answers...",
+        send_button: "Send",
+        allergy_title: "Common Allergy Types",
+        allergy_general: "Do you have an allergy?",
+        allergy_milk: "Do you have a milk allergy?",
+        allergy_egg: "Do you have an egg allergy?",
+        allergy_peanut: "Do you have a peanut allergy? (like almonds)",
+        allergy_seafood: "Do you have a seafood allergy? (fish or shrimp)",
+        allergy_meat: "Do you have a meat allergy?",
+        allergy_pet: "Do you have a pet allergy? (cats or dogs)",
+        allergy_wheat: "Are you allergic to wheat?",
+        allergy_other: "If you have any other allergies, please let us know",
+        allergy_placeholder: "Type your allergy here...",
+        footer_company_title: "Safe Hands",
+        footer_company_description: "Trusted Babysitting, Book reliable, vetted babysitters for your children with ease and confidence.",
+        footer_links_title: "Links",
+        footer_contact_title: "Contact Us",
+        footer_contact_email: "Email: Safehands.com",
+        footer_contact_phone: "Phone: 01279581077",
+        footer_contact_address: "Address: 202 Bakos Street, Alexandria, Egypt",
+        footer_copyright: "All rights reserved. 2025 Safe Hands."
+      }
+    };
+
+    function changeLanguage() {
+      const lang = document.getElementById('languageSelect').value;
+      document.getElementById('htmlLang').setAttribute('lang', lang);
+      document.getElementById('htmlLang').setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+      document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        element.textContent = translations[lang][key];
+      });
+
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-i18n-placeholder');
+        element.placeholder = translations[lang][key];
+      });
+
+      localStorage.setItem('language', lang);
+    }
+
+    function updateNavbar() {
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      const loginSignupLink = document.getElementById('login-signup-link');
+      const dashboardLink = document.getElementById('dashboard-link');
+      const logoutLink = document.getElementById('logout-link');
+      const userNameDisplay = document.getElementById('user-name-display');
+      const userNameText = document.getElementById('user-name-text');
+
+      if (userData.email) {
+        loginSignupLink.style.display = 'none';
+        dashboardLink.style.display = 'block';
+        logoutLink.style.display = 'block';
+        userNameDisplay.style.display = 'inline-flex';
+        userNameText.textContent = userData.name || 'مستخدم';
+      } else {
+        loginSignupLink.style.display = 'block';
+        dashboardLink.style.display = 'none';
+        logoutLink.style.display = 'none';
+        userNameDisplay.style.display = 'none';
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('userData');
+      updateNavbar();
+      window.location.href = '../log/login.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('language') || 'ar';
+      document.getElementById('languageSelect').value = savedLang;
+      changeLanguage();
+      updateNavbar();
+    });
+  </script>
+</body>
+</html>

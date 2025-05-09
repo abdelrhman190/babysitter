@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlLang">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="site_title">إنشاء حجز - SafeHands</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    min-height: 100vh;
+}
+
+header {
+    background-color: rgba(0, 120, 215, 0.95);
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+    position: relative;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.logo img {
+    width: 35px;
+    height: 35px;
+}
+
+.language-selector select {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #fff;
+    color: #333;
+}
+
+.user-name-display {
+    display: none;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #ecf0f1;
+    border-radius: 15px;
+}
+.user-name-display i {
+    margin-right: 5px;
+    color: #3498db;
+}
+.menu-toggle ul li .user-name-display {
+    display: inline-flex;
+    align-items: center;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li a {
+color: #fff;
+text-decoration: none;
+font-size: 15px;
+font-weight: 500;
+transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+color: #005BB5;
+}
+
+nav .menu-toggle label {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+}
+
+nav .menu-toggle input[type="checkbox"] {
+    display: none;
+}
+
+nav .menu-toggle input[type="checkbox"]:checked ~ ul {
+    display: block;
+}
+
+        /* تنسيق الناف بار في الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 200px;
+                background-color: rgba(0, 120, 215, 0.95);
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                backdrop-filter: blur(5px);
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .menu-toggle label {
+                display: block;
+            }
+
+            .menu-toggle input[type="checkbox"]:checked ~ ul {
+                display: block;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 10px;
+            }
+        }
+
+        /* تنسيق قسم الحجز */
+        .booking-page {
+            padding: 120px 20px 40px;
+            flex: 1;
+        }
+
+        .booking-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .booking-form h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #0078D7;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* تنسيق مجموعات النموذج */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        [dir="ltr"] .form-group {
+            text-align: left;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-group label i {
+            margin-left: 5px;
+            color: #0078D7;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input[type="datetime-local"] {
+            padding: 10px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #98ded9;
+            box-shadow: 0 0 5px rgba(152, 222, 217, 0.5);
+            outline: none;
+        }
+
+        /* تنسيق زر الحجز */
+        .btn {
+            background-color: #98ded9;
+            color: #ffffff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #7cc4bf;
+            transform: translateY(-2px);
+        }
+
+        /* تنسيق رسائل التنبيه */
+        .alert {
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: none;
+            text-align: center;
+        }
+
+        .alert.success {
+            background-color: #2ecc71;
+        }
+
+        /* تنسيق الفوتر */
+        footer {
+            background-color: #0078D7;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            margin-top: auto;
+        }
+
+        footer p {
+            font-size: 14px;
+        }
+
+        /* تنسيق الاستجابة للشاشات الصغيرة */
+        @media (max-width: 480px) {
+            .booking-form {
+                padding: 20px;
+            }
+
+            .booking-form h2 {
+                font-size: 24px;
+            }
+
+            .form-group label {
+                font-size: 14px;
+            }
+
+            .form-group input,
+            .form-group select {
+                font-size: 14px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><img src="/images-1-removebg-preview.png" alt="Safe Hands Icon" onerror="this.style.display='none';"><span data-i18n="site_title">SafeHands</span></div>
+            <div class="language-selector"><select id="languageSelect" onchange="changeLanguage()"><option value="ar">🇪🇬 عربي</option><option value="en">🇺🇸 English</option></select></div>
+            <div class="menu-toggle">
+                <input type="checkbox" id="menu-toggle">
+                <label for="menu-toggle">☰</label>
+                <ul>
+                    <li><a href="/index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
+                    <li><a href="/services/index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
+                    <li><a href="/about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
+                    <li><a href="/con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
+                    <li><a href="/baby/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
+                    <li><a href="/booking/book.html" class="nav-link" data-i18n="nav_book_now">الحجز</a></li>
+                    <li id="dashboard-link" style="display: none;">
+                        <a href="/my_pro/profile.html" class="nav-link" data-i18n="nav_profile">الملف الشخصي</a>
+                    </li>
+                    <li id="logout-link" style="display: none;"><a href="#" class="nav-link" onclick="logout(); return false;" data-i18n="nav_logout">تسجيل الخروج</a></li>
+                    <li id="login-signup-link"><a href="/log/login.html" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a></li>
+                    <span id="user-name-display" class="user-name-display">
+                        <i class="fas fa-user"></i>
+                        <span id="user-name-text"></span>
+                    </span>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <section class="booking-page">
+        <div class="booking-form">
+            <h2 data-i18n="form_title">إنشاء حجز جديد</h2>
+            <div id="alertMessage" class="alert" data-i18n="alert_message"></div>
+            <div class="form-group">
+                <label for="user-email" data-i18n="label_email"><i class="fas fa-envelope"></i> بريدك الإلكتروني</label>
+                <input type="email" id="user-email" required readonly>
+            </div>
+            <div class="form-group">
+                <label for="babysitter" data-i18n="label_babysitter"><i class="fas fa-user"></i> اختر جليسة الأطفال</label>
+                <select id="babysitter" required>
+                    <option value="" data-i18n="select_babysitter">اختر جليسة</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="booking-date" data-i18n="label_date"><i class="fas fa-calendar-alt"></i> تاريخ ووقت الحجز</label>
+                <input type="datetime-local" id="booking-date" required>
+            </div>
+            <div class="form-group">
+                <label for="duration" data-i18n="label_duration"><i class="fas fa-clock"></i> مدة الحجز (بالساعات)</label>
+                <input type="number" id="duration" min="1" required>
+            </div>
+            <div class="form-group">
+                <label for="service" data-i18n="label_service"><i class="fas fa-concierge-bell"></i> نوع الخدمة</label>
+                <select id="service" required>
+                    <option value="" disabled selected data-i18n="select_service">اختر الخدمة</option>
+                    <option value="eldercare" data-i18n="service_eldercare">رعاية المسنين</option>
+                    <option value="special_needs" data-i18n="service_special_needs">رعاية ذوي الاحتياجات الخاصة</option>
+                    <option value="house_cleaning" data-i18n="service_house_cleaning">تنظيف المنزل</option>
+                    <option value="childcare" data-i18n="service_childcare">رعاية أطفال</option>
+                    <option value="child_education" data-i18n="service_education">تعليم أطفال</option>
+                    <option value="nightcare" data-i18n="service_nightcare">رعاية ليلية</option>
+                    
+                </select>
+            </div>
+            <button class="btn" onclick="createBooking(event)" data-i18n="btn_book">حجز</button>
+        </div>
+    </section>
+    <footer>
+        <p data-i18n="footer_copyright">© 2025 SafeHands. جميع الحقوق محفوظة.</p>
+    </footer>
+    <script>
+        const translations = {
+            ar: {
+                site_title: "الأيدي الآمنة",
+                nav_home: "الرئيسية",
+                nav_services: "الخدمات",
+                nav_about: "من نحن",
+                nav_contact: "تواصل معنا",
+                nav_find_babysitters: "ابحث عن جليسات أطفال",
+                nav_book_now: "الحجز",
+                nav_profile: "الملف الشخصي",
+                nav_login_signup: "تسجيل الدخول / إنشاء حساب",
+                nav_logout: "تسجيل الخروج",
+                form_title: "إنشاء حجز جديد",
+                label_email: "بريدك الإلكتروني",
+                label_babysitter: "اختر جليسة الأطفال",
+                label_date: "تاريخ ووقت الحجز",
+                label_duration: "مدة الحجز (بالساعات)",
+                label_service: "نوع الخدمة",
+                select_babysitter: "اختر جليسة",
+                select_service: "اختر الخدمة",
+                service_childcare: "رعاية أطفال",
+                service_education: "تعليم أطفال",
+                service_nightcare: "رعاية ليلية",
+                service_eldercare: "رعاية المسنين",
+                service_special_needs: "رعاية ذوي الاحتياجات الخاصة",
+                service_house_cleaning: "تنظيف المنزل",
+                btn_book: "حجز",
+                alert_login: "يرجى تسجيل الدخول أولاً",
+                alert_fields: "يرجى ملء جميع الحقول.",
+                alert_fetch_error: "خطأ في جلب قائمة الجليسات",
+                alert_booking_conflict: "جليسة الأطفال محجوزة اليوم. يرجى اختيار يوم آخر.",
+                alert_booking_error: "حدث خطأ أثناء التحقق من الحجوزات.",
+                alert_create_error: "حدث خطأ أثناء الحجز: ",
+                alert_success: "تم الحجز بنجاح! تم إشعار الجليسة ببريدك: ",
+                footer_copyright: "© 2025 الأيدي الآمنة. جميع الحقوق محفوظة."
+            },
+            en: {
+                site_title: "Safe Hands",
+                nav_home: "Home",
+                nav_services: "Services",
+                nav_about: "About",
+                nav_contact: "Contact",
+                nav_find_babysitters: "Find Babysitters",
+                nav_book_now: "Book Now",
+                nav_profile: "My Profile",
+                nav_login_signup: "Login/Sign Up",
+                nav_logout: "Logout",
+                form_title: "Create a New Booking",
+                label_email: "Your Email",
+                label_babysitter: "Select Babysitter",
+                label_date: "Booking Date and Time",
+                label_duration: "Duration (in hours)",
+                label_service: "Service Type",
+                select_babysitter: "Select a Babysitter",
+                select_service: "Select a Service",
+                service_childcare: "Childcare",
+                service_education: "Child Education",
+                service_nightcare: "Night Care",
+                service_eldercare: "Elderly Care",
+                service_special_needs: "Special Needs Care",
+                service_house_cleaning: "House Cleaning",
+                btn_book: "Book",
+                alert_login: "Please login first",
+                alert_fields: "Please fill in all fields.",
+                alert_fetch_error: "Error fetching babysitters list",
+                alert_booking_conflict: "The babysitter is booked today. Please choose another day.",
+                alert_booking_error: "An error occurred while checking bookings.",
+                alert_create_error: "An error occurred during booking: ",
+                alert_success: "Booking successful! The babysitter has been notified with your email: ",
+                footer_copyright: "© 2025 SafeHands. All rights reserved."
+            }
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById('languageSelect').value;
+            document.getElementById('htmlLang').setAttribute('lang', lang);
+            document.getElementById('htmlLang').setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (key !== 'alert_message') {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            localStorage.setItem('language', lang);
+            updateNavbar();
+        }
+
+        function updateNavbar() {
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            const loginSignupLink = document.getElementById('login-signup-link');
+            const dashboardLink = document.getElementById('dashboard-link');
+            const logoutLink = document.getElementById('logout-link');
+            const userNameDisplay = document.getElementById('user-name-display');
+            const userNameText = document.getElementById('user-name-text');
+
+            if (userData.email) {
+                loginSignupLink.style.display = 'none';
+                dashboardLink.style.display = 'block';
+                logoutLink.style.display = 'block';
+                userNameDisplay.style.display = 'inline-flex';
+                userNameText.textContent = userData.name || 'مستخدم';
+            } else {
+                loginSignupLink.style.display = 'block';
+                dashboardLink.style.display = 'none';
+                logoutLink.style.display = 'none';
+                userNameDisplay.style.display = 'none';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('userData');
+            updateNavbar();
+            window.location.href = '/log/login.html';
+        }
+
+        function setUserEmail() {
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            const userEmailInput = document.getElementById('user-email');
+            const alertMessage = document.getElementById('alertMessage');
+            const lang = document.getElementById('languageSelect').value;
+
+            if (userData.email) {
+                userEmailInput.value = userData.email;
+            } else {
+                alertMessage.textContent = translations[lang].alert_login;
+                alertMessage.style.display = 'block';
+                setTimeout(() => window.location.href = '/log/login.html', 2000);
+            }
+        }
+
+        const supabase = window.supabase.createClient('https://ebzhfytrzcxsnepcudyl.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc');
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const savedLang = localStorage.getItem('language') || 'ar';
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage();
+            updateNavbar();
+            setUserEmail();
+            await loadBabysitters();
+        });
+
+        async function loadBabysitters() {
+            const { data, error } = await supabase.from('babysitters').select('*');
+            const alertMessage = document.getElementById('alertMessage');
+            const lang = document.getElementById('languageSelect').value;
+
+            if (error) {
+                console.error('Error fetching babysitters:', error);
+                alertMessage.textContent = translations[lang].alert_fetch_error;
+                alertMessage.style.display = 'block';
+                return;
+            }
+
+            const select = document.getElementById('babysitter');
+            data.forEach(sitter => {
+                const option = document.createElement('option');
+                option.value = JSON.stringify({ id: sitter.id, email: sitter.contact_info });
+                option.textContent = sitter.name;
+                select.appendChild(option);
+            });
+        }
+
+        async function createBooking(event) {
+            event.preventDefault();
+            const userEmailInput = document.getElementById('user-email').value.trim();
+            const babysitterData = JSON.parse(document.getElementById('babysitter').value || '{}');
+            const babysitterId = babysitterData.id;
+            const sitterEmail = babysitterData.email;
+            const bookingDate = document.getElementById('booking-date').value;
+            const duration = parseInt(document.getElementById('duration').value);
+            const service = document.getElementById('service').value;
+            const alertMessage = document.getElementById('alertMessage');
+            const lang = document.getElementById('languageSelect').value;
+
+            alertMessage.style.display = 'none';
+
+            if (!userEmailInput || !babysitterId || !bookingDate || !duration || !service) {
+                alertMessage.textContent = translations[lang].alert_fields;
+                alertMessage.style.display = 'block';
+                setTimeout(() => alertMessage.style.display = 'none', 5000);
+                return;
+            }
+
+            const today = new Date().toISOString().split('T')[0];
+            const selectedDate = new Date(bookingDate).toISOString().split('T')[0];
+
+            if (selectedDate === today) {
+                const { data: existingBookings, error: bookingError } = await supabase
+                    .from('bookings')
+                    .select('babysitter_id')
+                    .eq('babysitter_id', babysitterId)
+                    .gte('booking_date', today + 'T00:00:00')
+                    .lte('booking_date', today + 'T23:59:59');
+
+                if (bookingError) {
+                    console.error('Error checking bookings:', bookingError);
+                    alertMessage.textContent = translations[lang].alert_booking_error;
+                    alertMessage.style.display = 'block';
+                    setTimeout(() => alertMessage.style.display = 'none', 5000);
+                    return;
+                }
+
+                if (existingBookings.length > 0) {
+                    alertMessage.textContent = translations[lang].alert_booking_conflict;
+                    alertMessage.style.display = 'block';
+                    setTimeout(() => alertMessage.style.display = 'none', 5000);
+                    return;
+                }
+            }
+
+            const { error } = await supabase.from('bookings').insert({
+                user_email: userEmailInput,
+                babysitter_id: babysitterId,
+                sitter_email: sitterEmail,
+                booking_date: bookingDate,
+                duration_hours: duration,
+                status: 'pending',
+                service: service
+            });
+
+            if (error) {
+                console.error('Error creating booking:', error);
+                alertMessage.textContent = translations[lang].alert_create_error + error.message;
+                alertMessage.style.display = 'block';
+                setTimeout(() => alertMessage.style.display = 'none', 5000);
+            } else {
+                alertMessage.className = 'alert success';
+                alertMessage.textContent = translations[lang].alert_success + userEmailInput;
+                alertMessage.style.display = 'block';
+                setTimeout(() => alertMessage.style.display = 'none', 5000);
+                document.querySelectorAll('input, select').forEach(input => {
+                    if (input.id !== 'user-email') input.value = '';
+                });
+            }
+        }
+    </script>
+</body>
+</html>

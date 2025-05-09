@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlLang">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="site_title">Safe Hands - Services</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        .user-name-display {
+            display: none;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #ecf0f1;
+            border-radius: 15px;
+        }
+        .user-name-display i {
+            margin-right: 5px;
+            color: #3498db;
+        }
+        .menu-toggle ul li .user-name-display {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .services-section {
+            padding: 20px;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .service-card {
+            background: linear-gradient(135deg, #ffffff, #f0f4ff);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            overflow: hidden;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 120, 215, 0.2);
+        }
+        .service-card h2 {
+            font-size: 1.5rem;
+            color: #0078D7;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .service-card p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .service-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .why-us {
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f8f9fc, #e6ecf9);
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 1200px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .why-us h2 {
+            font-size: 2rem;
+            color: #0078D7;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .why-us ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0 10px;
+        }
+        .why-us li {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            font-size: 1.1rem;
+            color: #333;
+            text-align: center;
+        }
+        .why-us li:hover {
+            transform: translateY(-5px);
+            background-color: #f0f4ff;
+            color: #005BB5;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div id="logo" class="logo">
+                <img src="../images-1-removebg-preview.png" alt="Safe Hands Icon">
+                <span data-i18n="site_title">Safe Hands</span>
+            </div>
+            <div class="language-selector">
+                <select id="languageSelect" onchange="changeLanguage()">
+                    <option value="ar">🇪🇬 عربي</option>
+                    <option value="en">🇺🇸 English</option>
+                </select>
+            </div>
+            <div class="menu-toggle">
+                <input type="checkbox" id="menu-toggle">
+                <label for="menu-toggle">☰</label>
+                <ul>
+                    <li><a href="../index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
+                    <li><a href="index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
+                    <li><a href="../about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
+                    <li><a href="../con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
+                    <li><a href="/baby/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
+                    <li><a href="/booking/book.html" class="nav-link" data-i18n="nav_book_now">احجز الآن</a></li>
+                    <li id="dashboard-link" style="display: none;"><a href="/my_pro/profile.html" class="nav-link" data-i18n="nav_dashboard">الصفحة الشخصية</a></li>
+                    <li id="logout-link" style="display: none;"><a href="#" class="nav-link" onclick="logout(); return false;" data-i18n="nav_logout">تسجيل الخروج</a></li>
+                    <li id="login-signup-link"><a href="../log/login.html" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a></li>
+                    <span id="user-name-display" class="user-name-display">
+                        <i class="fas fa-user"></i>
+                        <span id="user-name-text"></span>
+                    </span>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <br><br><br><br>
+        <section class="services-section">
+            <h1 data-i18n="services_title">خدماتنا</h1>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h2 data-i18n="service_daily_care_title">الرعاية اليومية في المنزل</h2>
+                    <p data-i18n="service_daily_care_description">يقوم مقدم الرعاية بزيارة المسن في المنزل لتقديم المساعدة طوال اليوم.</p>
+                    <img src="photos/different-care-image-1-1019x675.jpg" alt="Daily Care" class="service-image">
+                </div>
+                <div class="service-card">
+                    <h2 data-i18n="service_doctor_visits_title">مرافقة لزيارات الطبيب أو المهمات</h2>
+                    <p data-i18n="service_doctor_visits_description">يرافق شخص ما المسن إلى المواعيد الطبية أو الخروجات المهمة.</p>
+                    <img src="photos/ChatGPT Image Apr 19, 2025, 03_39_26 PM.png" alt="Doctor Visits" class="service-image">
+                </div>
+                <div class="service-card">
+                    <h2 data-i18n="service_medication_title">مساعدة الأدوية</h2>
+                    <p data-i18n="service_medication_description">تنظيم وتتبع جداول الأدوية.</p>
+                    <img src="photos/10-different-ways-to-take-care-of-elders.webp" alt="Medication Assistance" class="service-image">
+                </div>
+                <div class="service-card">
+                    <h2 data-i18n="service_hygiene_title">دعم النظافة الشخصية</h2>
+                    <p data-i18n="service_hygiene_description">مساعدة آمنة ومحترمة في الأنشطة اليومية مثل الاستحمام أو ارتداء الملابس.</p>
+                    <img src="photos/Elder-Care-Arlington-Heights-Illinois.webp" alt="Hygiene Support" class="service-image">
+                </div>
+                <div class="service-card">
+                    <h2 data-i18n="service_overnight_title">الرعاية الليلية أو الإقامة المؤقتة</h2>
+                    <p data-i18n="service_overnight_description">للحالات التي تتطلب وجودًا ليليًا أو رعاية قصيرة الأمد.</p>
+                    <img src="photos/bigstock-elderly-and-nurse-or-carer-25600913.jpg" alt="Overnight Care" class="service-image">
+                </div>
+                <div class="service-card">
+                    <h2 data-i18n="service_companion_title">مرافق للمسنين في المناسبات</h2>
+                    <p data-i18n="service_companion_description">نقدم مرافقًا متعاونًا ليبقى مع المسنين خلال المناسبات العائلية، الأفراح، أو أي مناسبة خاصة.</p>
+                    <img src="photos/450ea778-en.jpg" alt="Companion for Events" class="service-image">
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <section class="why-us">
+            <h2 data-i18n="why_us_title">لماذا تختارنا؟</h2>
+            <ul>
+                <li data-i18n="why_us_background_check">فحص خلفية كامل لكل مقدم رعاية</li>
+                <li data-i18n="why_us_scheduling">جدولة مرنة بناءً على احتياجاتك</li>
+                <li data-i18n="why_us_reviews">تقييمات حقيقية من العائلات</li>
+                <li data-i18n="why_us_support">دعم على مدار الساعة</li>
+                <li data-i18n="why_us_care_plans">خطط رعاية مخصصة لكل عميل</li>
+                <li data-i18n="why_us_pricing">تسعير ميسور وشفاف</li>
+                <li data-i18n="why_us_multilingual">مقدمو رعاية متعددو اللغات متاحون عند الطلب</li>
+            </ul>
+        </section>
+
+        <div class="cta">
+            <a href="../booking/index.html" class="cta-button" data-i18n="book_now">احجز الآن</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="grid">
+                <div>
+                    <h3 data-i18n="footer_company_title">Safe Hands</h3>
+                    <p data-i18n="footer_company_description">احجز جليسات أطفال موثوقة ومُتحقق منها بسهولة وثقة.</p>
+                </div>
+                <div>
+                    <h3 data-i18n="footer_links_title">الروابط</h3>
+                    <ul>
+                        <li><a href="../index.html" data-i18n="nav_home">الرئيسية</a></li>
+                        <li><a href="../about/index.html" data-i18n="nav_about">من نحن</a></li>
+                        <li><a href="index.html" data-i18n="nav_services">الخدمات</a></li>
+                        <li><a href="../con/index.html" data-i18n="nav_contact">تواصل معنا</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 data-i18n="footer_contact_title">تواصل معنا</h3>
+                    <ul>
+                        <li data-i18n="footer_contact_email">البريد الإلكتروني: Safehands.com</li>
+                        <li data-i18n="footer_contact_phone">رقم الهاتف: 01279581077</li>
+                        <li data-i18n="footer_contact_address">العنوان: 202 شارع باكوس، الإسكندرية، مصر</li>
+                    </ul>
+                </div>
+                <div class="Social-Media">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <span data-i18n="footer_copyright">جميع الحقوق محفوظة. 2025 Safe Hands.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            ar: {
+                site_title: "الأيدي الآمنة",
+                nav_home: "الرئيسية",
+                nav_services: "الخدمات",
+                nav_about: "من نحن",
+                nav_contact: "تواصل معنا",
+                nav_find_babysitters: "ابحث عن جليسات أطفال",
+                nav_book_now: "احجز الآن",
+                nav_dashboard: "الصفحة الشخصية",
+                nav_login_signup: "تسجيل الدخول / إنشاء حساب",
+                nav_logout: "تسجيل الخروج",
+                services_title: "خدماتنا",
+                service_daily_care_title: "الرعاية اليومية في المنزل",
+                service_daily_care_description: "يقوم مقدم الرعاية بزيارة المسن في المنزل لتقديم المساعدة طوال اليوم.",
+                service_doctor_visits_title: "مرافقة لزيارات الطبيب أو المهمات",
+                service_doctor_visits_description: "يرافق شخص ما المسن إلى المواعيد الطبية أو الخروجات المهمة.",
+                service_medication_title: "مساعدة الأدوية",
+                service_medication_description: "تنظيم وتتبع جداول الأدوية.",
+                service_hygiene_title: "دعم النظافة الشخصية",
+                service_hygiene_description: "مساعدة آمنة ومحترمة في الأنشطة اليومية مثل الاستحمام أو ارتداء الملابس.",
+                service_overnight_title: "الرعاية الليلية أو الإقامة المؤقتة",
+                service_overnight_description: "للحالات التي تتطلب وجودًا ليليًا أو رعاية قصيرة الأمد.",
+                service_companion_title: "مرافق للمسنين في المناسبات",
+                service_companion_description: "نقدم مرافقًا متعاونًا ليبقى مع المسنين خلال المناسبات العائلية، الأفراح، أو أي مناسبة خاصة.",
+                why_us_title: "لماذا تختارنا؟",
+                why_us_background_check: "فحص خلفية كامل لكل مقدم رعاية",
+                why_us_scheduling: "جدولة مرنة بناءً على احتياجاتك",
+                why_us_reviews: "تقييمات حقيقية من العائلات",
+                why_us_support: "دعم على مدار الساعة",
+                why_us_care_plans: "خطط رعاية مخصصة لكل عميل",
+                why_us_pricing: "تسعير ميسور وشفاف",
+                why_us_multilingual: "مقدمو رعاية متعددو اللغات متاحون عند الطلب",
+                book_now: "احجز الآن",
+                footer_company_title: "الأيدي الآمنة",
+                footer_company_description: "احجز جليسات أطفال موثوقة ومُتحقق منها بسهولة وثقة.",
+                footer_links_title: "الروابط",
+                footer_contact_title: "تواصل معنا",
+                footer_contact_email: "البريد الإلكتروني: Safehands.com",
+                footer_contact_phone: "رقم الهاتف: 01279581077",
+                footer_contact_address: "العنوان: 202 شارع باكوس، الإسكندرية، مصر",
+                footer_copyright: "جميع الحقوق محفوظة. 2025 الأيدي الآمنة."
+            },
+            en: {
+                site_title: "Safe Hands",
+                nav_home: "Home",
+                nav_services: "Services",
+                nav_about: "About",
+                nav_contact: "Contact",
+                nav_find_babysitters: "Find Babysitters",
+                nav_book_now: "Book Now",
+                nav_dashboard: "My profile",
+                nav_login_signup: "Login/Sign Up",
+                nav_logout: "Logout",
+                services_title: "Our Services",
+                service_daily_care_title: "In-Home Daily Care",
+                service_daily_care_description: "A caregiver visits the senior at home to assist throughout the day.",
+                service_doctor_visits_title: "Accompaniment to Doctor Visits or Errands",
+                service_doctor_visits_description: "Someone accompanies the senior to medical appointments or important outings.",
+                service_medication_title: "Medication Assistance",
+                service_medication_description: "Organizing and tracking medication schedules.",
+                service_hygiene_title: "Personal Hygiene Support",
+                service_hygiene_description: "Safe and respectful help with daily activities like bathing or dressing.",
+                service_overnight_title: "Overnight or Temporary Stay Care",
+                service_overnight_description: "For situations requiring overnight presence or short-term care.",
+                service_companion_title: "Elderly Companion for Events",
+                service_companion_description: "We offer a caring companion to stay with seniors during family events, weddings, or any special occasion.",
+                why_us_title: "Why Choose Us?",
+                why_us_background_check: "Full background check for every caregiver",
+                why_us_scheduling: "Flexible scheduling based on your needs",
+                why_us_reviews: "Real reviews from families",
+                why_us_support: "24/7 Support",
+                why_us_care_plans: "Personalized care plans for each client",
+                why_us_pricing: "Affordable and transparent pricing",
+                why_us_multilingual: "Multilingual caregivers available on request",
+                book_now: "Book Now",
+                footer_company_title: "Safe Hands",
+                footer_company_description: "Trusted Babysitting, Book reliable, vetted babysitters for your children with ease and confidence.",
+                footer_links_title: "Links",
+                footer_contact_title: "Contact Us",
+                footer_contact_email: "Email: Safehands.com",
+                footer_contact_phone: "Phone: 01279581077",
+                footer_contact_address: "Address: 202 Bakos Street, Alexandria, Egypt",
+                footer_copyright: "All rights reserved. 2025 Safe Hands."
+            }
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById('languageSelect').value;
+            document.getElementById('htmlLang').setAttribute('lang', lang);
+            document.getElementById('htmlLang').setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                element.textContent = translations[lang][key];
+            });
+
+            localStorage.setItem('language', lang);
+            updateNavbar();
+        }
+
+        // تحديث الناف بار بناءً على حالة تسجيل الدخول
+        function updateNavbar() {
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            const loginSignupLink = document.getElementById('login-signup-link');
+            const dashboardLink = document.getElementById('dashboard-link');
+            const logoutLink = document.getElementById('logout-link');
+            const userNameDisplay = document.getElementById('user-name-display');
+            const userNameText = document.getElementById('user-name-text');
+
+            if (userData.email) {
+                loginSignupLink.style.display = 'none';
+                dashboardLink.style.display = 'block';
+                logoutLink.style.display = 'block';
+                userNameDisplay.style.display = 'inline-flex';
+                userNameText.textContent = userData.name || 'مستخدم';
+            } else {
+                loginSignupLink.style.display = 'block';
+                dashboardLink.style.display = 'none';
+                logoutLink.style.display = 'none';
+                userNameDisplay.style.display = 'none';
+            }
+        }
+
+        // دالة تسجيل الخروج
+        function logout() {
+            localStorage.removeItem('userData');
+            updateNavbar();
+            window.location.href = '../log/login.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('language') || 'ar';
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage();
+            updateNavbar();
+        });
+    </script>
+</body>
+</html>

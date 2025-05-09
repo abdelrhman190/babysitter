@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlLang">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="site_title">تسجيل الدخول - SafeHands</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans Arabic', 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0078D7, #98ded9);
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease infinite;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            background-color: rgba(0, 120, 215, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logo img {
+            width: 35px;
+            height: 35px;
+        }
+
+        .language-selector select {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #005BB5;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        .language-selector select:hover {
+            background-color: #004d99;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #005BB5;
+        }
+
+        nav .menu-toggle label {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        nav .menu-toggle input[type="checkbox"] {
+            display: none;
+        }
+
+        nav .menu-toggle input[type="checkbox"]:checked ~ ul {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 200px;
+                background-color: rgba(0, 120, 215, 0.95);
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                backdrop-filter: blur(5px);
+            }
+
+            nav .menu-toggle label {
+                display: block;
+            }
+
+            nav .menu-toggle input[type="checkbox"]:checked ~ ul {
+                display: block;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 10px;
+            }
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: visible;
+            width: 768px;
+            max-width: 100%;
+            min-height: 480px;
+            margin-top: 100px; /* زيادة المسافة لتجنب التداخل مع الـ header */
+            z-index: 1;
+        }
+
+        .container p {
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: 0.3px;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .container span {
+            font-size: 12px;
+            color: #555;
+        }
+
+        .container a {
+            color: #0078D7;
+            font-size: 13px;
+            text-decoration: none;
+            margin: 15px 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .container a:hover {
+            color: #005BB5;
+        }
+
+        .container button {
+            background-color: #0078D7;
+            color: #fff;
+            font-size: 12px;
+            padding: 10px 45px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .container button:hover {
+            background-color: #005BB5;
+            transform: scale(1.05);
+        }
+
+        .back {
+            background-color: #0078D7;
+            color: #fff;
+            font-size: 12px;
+            padding: 10px 45px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .back:hover {
+            background-color: #005BB5;
+            transform: scale(1.05);
+        }
+
+        .container form {
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 40px;
+            height: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .container input {
+            background-color: #f4f4f9;
+            border: none;
+            margin: 8px 0;
+            padding: 10px 15px;
+            font-size: 13px;
+            border-radius: 8px;
+            width: 100%;
+            outline: none;
+            color: #333;
+        }
+
+        .container input::placeholder {
+            color: #999;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+            z-index: 3;
+        }
+
+        .sign-in {
+            left: 0;
+            width: 50%;
+            z-index: 3;
+        }
+
+        [dir="rtl"] .sign-in {
+            left: unset;
+            right: 0;
+        }
+
+        .container.active .sign-in {
+            transform: translateX(100%);
+        }
+
+        [dir="rtl"] .container.active .sign-in {
+            transform: translateX(-100%);
+        }
+
+        .sign-up {
+            left: 0;
+            width: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        [dir="rtl"] .sign-up {
+            left: unset;
+            right: 0;
+        }
+
+        .container.active .sign-up {
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 5;
+            animation: move 0.6s;
+        }
+
+        [dir="rtl"] .container.active .sign-up {
+            transform: translateX(-100%);
+        }
+
+        @keyframes move {
+            0%, 49.99% { opacity: 0; z-index: 1; }
+            50%, 100% { opacity: 1; z-index: 5; }
+        }
+
+        .social-icons {
+            margin: 20px 0;
+        }
+
+        .social-icons a {
+            border: 1px solid #ccc;
+            border-radius: 20%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 3px;
+            width: 40px;
+            height: 40px;
+            color: #0078D7;
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #fff;
+            background-color: #0078D7;
+        }
+
+        .toggle-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: all 0.6s ease-in-out;
+            border-radius: 150px 0 0 100px;
+            z-index: 1000;
+        }
+
+        [dir="rtl"] .toggle-container {
+            left: unset;
+            right: 50%;
+            border-radius: 0 150px 100px 0;
+        }
+
+        .container.active .toggle-container {
+            transform: translateX(-100%);
+            border-radius: 0 150px 100px 0;
+        }
+
+        [dir="rtl"] .container.active .toggle-container {
+            transform: translateX(100%);
+            border-radius: 150px 0 0 100px;
+        }
+
+        .toggle {
+            background: linear-gradient(to right, #5c6bc0, #0078D7);
+            color: #fff;
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transform: translateX(0);
+            transition: all 0.6s ease-in-out;
+        }
+
+        [dir="rtl"] .toggle {
+            left: unset;
+            right: -100%;
+        }
+
+        .container.active .toggle {
+            transform: translateX(50%);
+        }
+
+        [dir="rtl"] .container.active .toggle {
+            transform: translateX(-50%);
+        }
+
+        .toggle-panel {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 30px;
+            text-align: center;
+            top: 0;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .toggle-left {
+            left: 0;
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+
+        [dir="rtl"] .toggle-left {
+            left: unset;
+            right: 0;
+            transform: translateX(100%);
+        }
+
+        .container.active .toggle-left {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .toggle-right {
+            right: 0;
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        [dir="rtl"] .toggle-right {
+            right: unset;
+            left: 0;
+        }
+
+        .container.active .toggle-right {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        [dir="rtl"] .container.active .toggle-right {
+            transform: translateX(-100%);
+        }
+
+        .status {
+            padding: 12px 20px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #d32f2f;
+            background-color: rgba(255, 255, 255, 0.85); /* خلفية شبه شفافة */
+            backdrop-filter: blur(8px); /* تأثير زجاجي */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* ظل ناعم */
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px; /* مسافة بين الأيقونة والنص */
+            text-align: center;
+            visibility: visible !important;
+            opacity: 1 !important;
+            transition: opacity 0.4s ease, transform 0.3s ease; /* انتقال سلس */
+            z-index: 1001 !important;
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%) scale(1);
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .status.success {
+            color: #2ecc71;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-color: rgba(46, 204, 113, 0.3);
+        }
+
+        .status:empty {
+            visibility: hidden;
+            opacity: 0;
+            transform: translateX(-50%) scale(0.95); /* تأثير تقليص عند الاختفاء */
+        }
+
+        .status i {
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .status.success i {
+            transform: scale(1.1); /* تكبير الأيقونة عند النجاح */
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                min-height: 400px;
+                margin-top: 80px;
+            }
+
+            .container form {
+                padding: 0 20px;
+            }
+
+            .toggle-panel h1 {
+                font-size: 20px;
+            }
+
+            .toggle-panel p {
+                font-size: 12px;
+            }
+
+            .toggle-panel button {
+                padding: 8px 30px;
+                font-size: 10px;
+            }
+
+            .social-icons a {
+                width: 35px;
+                height: 35px;
+            }
+
+            .status {
+                font-size: 13px;
+                padding: 10px 15px;
+                width: 90%;
+                top: -50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="../images-1-removebg-preview.png" alt="Safe Hands Icon" onerror="this.style.display='none';">
+                <span data-i18n="site_title">SafeHands</span>
+            </div>
+            <div class="language-selector">
+                <select id="languageSelect" onchange="changeLanguage()">
+                    <option value="ar">🇪🇬 عربي</option>
+                    <option value="en">🇺🇸 English</option>
+                </select>
+            </div>
+            <div class="menu-toggle">
+                <input type="checkbox" id="menu-toggle">
+                <label for="menu-toggle">☰</label>
+                <ul>
+                    <li><a href="/index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
+                    <li><a href="/services/index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
+                    <li><a href="/about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
+                    <li><a href="/con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
+                    <li><a href="/baby/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
+                    <li><a href="/booking/book.html" class="nav-link" data-i18n="nav_book_now">الحجز</a></li>
+                    <li id="dashboard-link" style="display: none;"><a href="/my_pro/profile.html" class="nav-link" data-i18n="nav_profile">الملف الشخصي</a></li>
+                    <li id="logout-link" style="display: none;"><a href="#" class="nav-link" onclick="logout(); return false;" data-i18n="nav_logout">تسجيل الخروج</a></li>
+                    <li id="login-signup-link"><a href="/log/login.html" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container" id="container">
+        <div class="status" id="status"><i class="fas fa-info-circle"></i> جاهز لتسجيل الدخول...</div>
+        <div class="form-container sign-up">
+            <form id="signup-form">
+                <h1 data-i18n="form_title_signup">إنشاء حساب</h1>
+                <div class="social-icons">
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+                <span data-i18n="signup_span">أو استخدم بريدك الإلكتروني للتسجيل</span>
+                <input type="text" id="signup-name" placeholder="أدخل اسمك" required data-i18n-placeholder="label_name">
+                <input type="email" id="signup-email" placeholder="أدخل بريدك الإلكتروني" required data-i18n-placeholder="label_email">
+                <input type="password" id="signup-password" placeholder="أدخل كلمة المرور" required data-i18n-placeholder="label_password">
+                <button type="submit" data-i18n="btn_signup">إنشاء حساب</button>
+            </form>
+        </div>
+        <div class="form-container sign-in">
+            <form id="signin-form">
+                <h1 data-i18n="form_title">تسجيل الدخول</h1>
+                <div class="social-icons">
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+                <span data-i18n="signin_span">أو استخدم بريدك الإلكتروني وكلمة المرور</span>
+                <input type="email" id="signin-email" placeholder="أدخل بريدك الإلكتروني" required data-i18n-placeholder="label_email">
+                <input type="password" id="signin-password" placeholder="أدخل كلمة المرور" required autocomplete="current-password" data-i18n-placeholder="label_password">
+                <a href="#" data-i18n="forgot_password">نسيت كلمة المرور؟</a>
+                <button type="submit" data-i18n="btn_signin">تسجيل الدخول</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1 data-i18n="welcome_back">مرحبًا بعودتك!</h1>
+                    <p data-i18n="welcome_back_text">أدخل بياناتك الشخصية لاستخدام جميع ميزات الموقع</p>
+                    <button id="login" data-i18n="btn_signin">تسجيل الدخول</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1 data-i18n="hello_friend">مرحبًا، صديق!</h1>
+                    <p data-i18n="hello_friend_text">سجل ببياناتك الشخصية لاستخدام جميع ميزات الموقع</p>
+                    <button id="register" data-i18n="btn_signup">إنشاء حساب</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button onclick="history.back()" class="back" data-i18n="btn_back">رجوع</button>
+
+    <script>
+        const translations = {
+            ar: {
+                site_title: "تسجيل الدخول - SafeHands",
+                nav_home: "الرئيسية",
+                nav_services: "الخدمات",
+                nav_about: "من نحن",
+                nav_contact: "تواصل معنا",
+                nav_find_babysitters: "ابحث عن جليسات أطفال",
+                nav_book_now: "الحجز",
+                nav_profile: "الملف الشخصي",
+                nav_login_signup: "تسجيل الدخول / إنشاء حساب",
+                nav_logout: "تسجيل الخروج",
+                form_title: "تسجيل الدخول",
+                form_title_signup: "إنشاء حساب",
+                signup_span: "أو استخدم بريدك الإلكتروني للتسجيل",
+                signin_span: "أو استخدم بريدك الإلكتروني وكلمة المرور",
+                label_name: "أدخل اسمك",
+                label_email: "أدخل بريدك الإلكتروني",
+                label_password: "أدخل كلمة المرور",
+                forgot_password: "نسيت كلمة المرور؟",
+                btn_signin: "تسجيل الدخول",
+                btn_signup: "إنشاء حساب",
+                btn_back: "رجوع",
+                welcome_back: "مرحبًا بعودتك!",
+                welcome_back_text: "أدخل بياناتك الشخصية لاستخدام جميع ميزات الموقع",
+                hello_friend: "مرحبًا، صديق!",
+                hello_friend_text: "سجل ببياناتك الشخصية لاستخدام جميع ميزات الموقع",
+                msg_ready_signup: "جاهز لإنشاء الحساب...",
+                msg_ready_signin: "جاهز لتسجيل الدخول...",
+                msg_validation_failed: "جميع الحقول مطلوبة.",
+                msg_invalid_email: "تنسيق البريد الإلكتروني غير صحيح.",
+                msg_short_password: "يجب أن تكون كلمة المرور 8 أحرف على الأقل.",
+                msg_checking_email: "جاري التحقق من البريد الإلكتروني...",
+                msg_email_exists: "البريد الإلكتروني مستخدم بالفعل.",
+                msg_email_not_found: "البريد الإلكتروني غير موجود.",
+                msg_sending_data: "جاري إرسال البيانات...",
+                msg_signup_success: "تم إنشاء الحساب بنجاح! يرجى تسجيل الدخول.",
+                msg_signin_success: "تم تسجيل الدخول بنجاح!",
+                msg_incorrect_password: "كلمة المرور غير صحيحة.",
+                msg_network_error: "خطأ في الشبكة. يرجى المحاولة مرة أخرى لاحقًا.",
+                msg_server_error: "خطأ في الخادوم: "
+            },
+            en: {
+                site_title: "Login - SafeHands",
+                nav_home: "Home",
+                nav_services: "Services",
+                nav_about: "About",
+                nav_contact: "Contact",
+                nav_find_babysitters: "Find Babysitters",
+                nav_book_now: "Book Now",
+                nav_profile: "My Profile",
+                nav_login_signup: "Login/Sign Up",
+                nav_logout: "Logout",
+                form_title: "Sign In",
+                form_title_signup: "Sign Up",
+                signup_span: "or use your email for registration",
+                signin_span: "or use your email password",
+                label_name: "Enter your name",
+                label_email: "Enter your email",
+                label_password: "Enter your password",
+                forgot_password: "Forget Your Password?",
+                btn_signin: "Sign In",
+                btn_signup: "Sign Up",
+                btn_back: "Back",
+                welcome_back: "Welcome Back!",
+                welcome_back_text: "Enter your personal details to use all of site features",
+                hello_friend: "Hello, Friend!",
+                hello_friend_text: "Register with your personal details to use all of site features",
+                msg_ready_signup: "Ready to create an account...",
+                msg_ready_signin: "Ready to sign in...",
+                msg_validation_failed: "Please fill in all fields.",
+                msg_invalid_email: "Invalid email format.",
+                msg_short_password: "Password must be at least 8 characters.",
+                msg_checking_email: "Checking email...",
+                msg_email_exists: "Email already in use.",
+                msg_email_not_found: "Email not found.",
+                msg_sending_data: "Sending data...",
+                msg_signup_success: "Account created successfully! Please sign in.",
+                msg_signin_success: "Sign in successful!",
+                msg_incorrect_password: "Incorrect password.",
+                msg_network_error: "Network error. Please try again later.",
+                msg_server_error: "Server error: "
+            }
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById('languageSelect').value;
+            const html = document.getElementById('htmlLang');
+            html.setAttribute('lang', lang);
+            html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                element.textContent = translations[lang][key] || element.textContent;
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                element.placeholder = translations[lang][key] || element.placeholder;
+            });
+
+            const status = document.getElementById('status');
+            status.innerHTML = `<i class="fas fa-info-circle"></i> ${translations[lang].msg_ready_signin}`;
+
+            localStorage.setItem('language', lang);
+            updateNavbar();
+        }
+
+        function updateNavbar() {
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            const loginSignupLink = document.getElementById('login-signup-link');
+            const dashboardLink = document.getElementById('dashboard-link');
+            const logoutLink = document.getElementById('logout-link');
+
+            if (userData.email) {
+                loginSignupLink.style.display = 'none';
+                dashboardLink.style.display = 'block';
+                logoutLink.style.display = 'block';
+            } else {
+                loginSignupLink.style.display = 'block';
+                dashboardLink.style.display = 'none';
+                logoutLink.style.display = 'none';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('userData');
+            updateNavbar();
+            window.location.href = '/log/login.html';
+        }
+
+        async function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function updateStatus(message, isSuccess = false) {
+            const status = document.getElementById('status');
+            status.classList.remove('success');
+            if (isSuccess) {
+                status.classList.add('success');
+                status.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            } else {
+                status.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            }
+            status.style.display = 'flex';
+            status.style.visibility = 'visible';
+            status.style.opacity = '1';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('container');
+            const registerBtn = document.getElementById('register');
+            const loginBtn = document.getElementById('login');
+            let signupForm = document.getElementById('signup-form');
+            let signinForm = document.getElementById('signin-form');
+            let status = document.getElementById('status');
+
+            if (!signupForm || !signinForm || !status) {
+                console.error('One or more elements not found:', { signupForm, signinForm, status });
+                return;
+            }
+
+            const savedLang = localStorage.getItem('language') || 'ar';
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage();
+            updateNavbar();
+
+            status.style.display = 'flex';
+            status.style.visibility = 'visible';
+            status.style.opacity = '1';
+            console.log('Page loaded, initial status set:', { status: status.textContent });
+
+            registerBtn.addEventListener('click', () => {
+                container.classList.add("active");
+                updateStatus(translations[savedLang].msg_ready_signup);
+                console.log('Switched to Sign Up, status:', status.textContent);
+            });
+
+            loginBtn.addEventListener('click', () => {
+                container.classList.remove("active");
+                updateStatus(translations[savedLang].msg_ready_signin);
+                console.log('Switched to Sign In, status:', status.textContent);
+            });
+
+            signupForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('signup-name').value.trim();
+                const email = document.getElementById('signup-email').value.trim();
+                const password = document.getElementById('signup-password').value.trim();
+                const lang = document.getElementById('languageSelect').value;
+
+                updateStatus('');
+
+                if (!name || !email || !password) {
+                    updateStatus(translations[lang].msg_validation_failed);
+                    console.log('Validation failed:', translations[lang].msg_validation_failed);
+                    await delay(2000);
+                    return;
+                }
+                if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                    updateStatus(translations[lang].msg_invalid_email);
+                    console.log('Invalid email:', translations[lang].msg_invalid_email);
+                    await delay(2000);
+                    return;
+                }
+                if (password.length < 8) {
+                    updateStatus(translations[lang].msg_short_password);
+                    console.log('Short password:', translations[lang].msg_short_password);
+                    await delay(2000);
+                    return;
+                }
+
+                try {
+                    updateStatus(translations[lang].msg_checking_email);
+                    console.log('Checking email:', translations[lang].msg_checking_email);
+                    await delay(2000);
+                    const checkResponse = await fetch(`https://ebzhfytrzcxsnepcudyl.supabase.co/rest/v1/users?select=*&contact_info=eq.${encodeURIComponent(email)}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc',
+                            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc'
+                        }
+                    });
+
+                    if (!checkResponse.ok) {
+                        updateStatus(translations[lang].msg_server_error + checkResponse.statusText);
+                        console.log('Server error:', translations[lang].msg_server_error + checkResponse.statusText);
+                        await delay(2000);
+                        return;
+                    }
+
+                    const existingUsers = await checkResponse.json();
+                    if (existingUsers.length > 0) {
+                        updateStatus(translations[lang].msg_email_exists);
+                        console.log('Email exists:', translations[lang].msg_email_exists);
+                        await delay(2000);
+                        return;
+                    }
+
+                    updateStatus(translations[lang].msg_sending_data);
+                    console.log('Sending data:', translations[lang].msg_sending_data);
+                    await delay(2000);
+                    const response = await fetch('https://ebzhfytrzcxsnepcudyl.supabase.co/rest/v1/users', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc',
+                            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc',
+                            'Prefer': 'return=minimal'
+                        },
+                        body: JSON.stringify({ name, contact_info: email, pass: password })
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        updateStatus(translations[lang].msg_server_error + (errorData.message || response.statusText));
+                        console.log('Server error on POST:', translations[lang].msg_server_error + (errorData.message || response.statusText));
+                        await delay(2000);
+                        return;
+                    }
+
+                    updateStatus(translations[lang].msg_signup_success, true);
+                    console.log('Signup success:', translations[lang].msg_signup_success);
+                    signupForm.reset();
+                    await delay(2000);
+                    container.classList.remove("active");
+                    updateStatus(translations[lang].msg_ready_signin);
+                } catch (error) {
+                    console.error('Sign Up error:', error);
+                    updateStatus(translations[lang].msg_network_error + ' ' + error.message);
+                    console.log('Network error:', translations[lang].msg_network_error + ' ' + error.message);
+                    await delay(2000);
+                }
+            });
+
+            signinForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('signin-email').value.trim();
+                const password = document.getElementById('signin-password').value.trim();
+                const lang = document.getElementById('languageSelect').value;
+
+                updateStatus('');
+
+                if (!email || !password) {
+                    updateStatus(translations[lang].msg_validation_failed);
+                    console.log('Validation failed:', translations[lang].msg_validation_failed);
+                    await delay(2000);
+                    return;
+                }
+                if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                    updateStatus(translations[lang].msg_invalid_email);
+                    console.log('Invalid email:', translations[lang].msg_invalid_email);
+                    await delay(2000);
+                    return;
+                }
+                if (password.length < 8) {
+                    updateStatus(translations[lang].msg_short_password);
+                    console.log('Short password:', translations[lang].msg_short_password);
+                    await delay(2000);
+                    return;
+                }
+
+                try {
+                    updateStatus(translations[lang].msg_checking_email);
+                    console.log('Checking email:', translations[lang].msg_checking_email);
+                    await delay(2000);
+                    const response = await fetch(`https://ebzhfytrzcxsnepcudyl.supabase.co/rest/v1/users?contact_info=eq.${encodeURIComponent(email)}&select=*`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc',
+                            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        updateStatus(translations[lang].msg_server_error + response.statusText);
+                        console.log('Server error:', translations[lang].msg_server_error + response.statusText);
+                        await delay(2000);
+                        return;
+                    }
+
+                    const data = await response.json();
+                    if (data.length === 0) {
+                        updateStatus(translations[lang].msg_email_not_found);
+                        console.log('Email not found:', translations[lang].msg_email_not_found);
+                        await delay(2000);
+                        return;
+                    }
+
+                    const user = data[0];
+                    if (user.pass !== password) {
+                        updateStatus(translations[lang].msg_incorrect_password);
+                        console.log('Incorrect password:', translations[lang].msg_incorrect_password);
+                        await delay(2000);
+                        return;
+                    }
+
+                    const userData = { name: user.name, email: user.contact_info };
+                    localStorage.setItem('userData', JSON.stringify(userData));
+                    updateStatus(translations[lang].msg_signin_success, true);
+                    console.log('Signin success:', translations[lang].msg_signin_success);
+                    updateNavbar();
+                    await delay(2000);
+                    window.location.href = '/index.html';
+                } catch (error) {
+                    console.error('Sign In error:', error);
+                    updateStatus(translations[lang].msg_network_error + ' ' + error.message);
+                    console.log('Network error:', translations[lang].msg_network_error + ' ' + error.message);
+                    await delay(2000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
